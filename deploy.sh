@@ -28,8 +28,8 @@ cd ..
 
 echo "Deploying CDK Stack"
 cd cloud_infra
-cdk synth
-cdk deploy --require-approval never
+../node_modules/.bin/cdk synth
+../node_modules/.bin/cdk deploy --require-approval never
 cd ..
 
 echo "Running SageMaker Pipeline"
