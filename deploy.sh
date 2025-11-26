@@ -6,6 +6,16 @@ set -x  # Print commands as they run for easier debugging
 python3 -m venv .venv
 source .venv/bin/activate
 
+echo "============== PYTHON DEBUG INFO (INSIDE VENV) =============="
+echo "Python interpreter (inside venv):"
+which python
+which python3
+python --version
+
+echo "PATH (inside venv):"
+echo $PATH
+echo "=============================================================="
+
 # Upgrade pip and install Python dependencies
 pip install --upgrade pip
 pip install -r requirements.txt
