@@ -1,5 +1,5 @@
 {
-  "app": "/opt/anaconda3/envs/mlops_pipeline/bin/python app.py",
+  "app": ".venv/bin/python app.py",
   "watch": {
     "include": [
       "**"
