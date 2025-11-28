@@ -10,7 +10,9 @@ from aws_cdk import (
     aws_sqs as sqs,
     aws_sagemaker as sagemaker,
     aws_events as events,
-    aws_events_targets as targets
+    aws_events_targets as targets,
+    aws_sns as sns,
+    aws_sns_subscriptions as subscriptions
 )
 from aws_cdk.aws_iam import Role
 from constructs import Construct
@@ -104,7 +106,7 @@ class MlopsPipelineStack(Stack):
 
 
         # Create an Event rule to trigger Lambda on Sagemaker Model State Change
-        rule = events.Rule(
+        lambda_trigger_rule = events.Rule(
             self, 'sagemaker-saket-mlops-model-approve-or-reject',
             event_pattern={
                 "source": ["aws.sagemaker"],
@@ -116,7 +118,35 @@ class MlopsPipelineStack(Stack):
             }
         )
 
-        rule.add_target(targets.LambdaFunction(handler=lambda_fn))
+        lambda_trigger_rule.add_target(targets.LambdaFunction(handler=lambda_fn))
+
+        # Create an Event Rule to publish SNS Topic when Sagemaker Endpoint is Alive and In Service.
+
+        sns_publish_topic = sns.Topic(
+            self, "SagemakerEndpointTopic",
+            topic_name="sagemaker-endpoint-notification",
+            display_name="sagemaker-endpoint-notification"
+        )
+
+        sns_publish_topic.add_subscription(subscriptions.EmailSubscription("saketthavananilindan@gmail.com"))
+        
+        
+        sns_trigger_rule = events.Rule(
+            self, 'sagemaker-endpoint-inservice-notification',
+            event_pattern={
+                "source": ["aws.sagemaker"],
+                "detail_type": ["Sagemaker Endpoint State Change"],
+                "detail": {
+                    "EndpointStatus": ["IN_SERVICE"],
+                    "EndpointName": ["mlops-endpoint"]
+                }
+            }
+        )
+
+        sns_trigger_rule.add_target(targets.SnsTopic(topic=sns_publish_topic))
+
+
+
 
 
 
