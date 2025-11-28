@@ -129,6 +129,13 @@ class MlopsPipelineStack(Stack):
         )
 
         sns_publish_topic.add_subscription(subscriptions.EmailSubscription("saketthavananilindan@gmail.com"))
+
+        sns_publish_topic.add_to_resource_policy(
+            iam.PolicyStatement(
+                principals=[iam.ServicePrincipal("events.amazonaws.com")],
+                actions=["sns:Publish"]
+            )
+        )
         
         
         sns_trigger_rule = events.Rule(
