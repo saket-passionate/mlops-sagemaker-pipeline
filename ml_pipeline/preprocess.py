@@ -6,6 +6,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import joblib
 
 
 print("Processing step started")
@@ -58,11 +59,18 @@ def run_preprocessing():
     output_dir = "/opt/ml/processing/train"
     os.makedirs(output_dir, exist_ok=True)
 
+    import joblib
+    # Save the fitted preprocessing pipeline
+    joblib.dump(pipeline, os.path.join(output_dir, "preprocessing_pipeline.joblib"))
+
+
     # Save processed data as CSV; convert numpy array back to dataframe if needed
     pd.DataFrame(processed_data.toarray() if hasattr(processed_data, "toarray") else processed_data).to_csv(
         os.path.join(output_dir, "train.csv"),
         index=False
     )
+
+    joblib
 
     print("Processed data is: ", processed_data)
     return processed_data

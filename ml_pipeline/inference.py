@@ -8,17 +8,20 @@ import joblib
 import os
 import json
 import numpy as np
+import pandas as pd
 
 
 ## 1. LOAD MODEL AT CONTAINER STARTUP
 
 def model_fn(model_dir):
     model_path = os.path.join(model_dir, "model.joblib")
+    preprocessor_path = os.path.join(model_dir, "preprocessing_pipeline.joblib")
     print(f"Loading model from {model_path}")
 
     model = joblib.load(model_path)
+    preprocessor = joblib.load(preprocessor_path)
 
-    return model
+    return {"model": model, "preprocessor": preprocessor}
 
 ## 2. Process INPUT
 
@@ -30,6 +33,7 @@ def input_fn(request_body, content_type):
 
     ### Request body sample
     ## 5.1,3.5,6.2,7.8
+    # island, gender,age
 
     if content_type == "text/csv":
         # Convert CSV string -> numpy array
@@ -42,15 +46,28 @@ def input_fn(request_body, content_type):
         )
         return data
     
+    elif content_type == "application/json":
+        data = json.loads(request_body)
+
+        # Convert JSON to Data Frame like structure
+        X = pd.DataFrame(data)
+
+        return X
+
+
+    
     return ValueError(f"Unsupported content type: {content_type}")
 
-def predict_fn(input_data, model):
+def predict_fn(input_data, model_data):
     """
     Perform prediction using the loaded model
     
     """
-
-    prediction = model.predict(input_data)
+    preprocessor = model_data["preprocessor"]
+    model = model_data["model"]
+    
+    X_transformed = preprocessor.transform(input_data)
+    prediction = model.predict(X_transformed)
     return prediction
 
 

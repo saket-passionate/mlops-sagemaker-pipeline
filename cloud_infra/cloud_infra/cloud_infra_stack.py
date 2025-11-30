@@ -133,7 +133,8 @@ class MlopsPipelineStack(Stack):
         sns_publish_topic.add_to_resource_policy(
             iam.PolicyStatement(
                 principals=[iam.ServicePrincipal("events.amazonaws.com")],
-                actions=["sns:Publish"]
+                actions=["sns:Publish"],
+                sid="AllowEventBridgeToPublish"
             )
         )
         
