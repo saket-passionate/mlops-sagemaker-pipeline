@@ -61,7 +61,8 @@ def run_preprocessing():
 
     import joblib
     # Save the fitted preprocessing pipeline
-    joblib.dump(pipeline, os.path.join(output_dir, "preprocessing_pipeline.joblib"))
+    model_dir = os.environ.get('SM_MODEL_DIR') or "/opt/ml/model"
+    joblib.dump(pipeline, os.path.join(model_dir, "preprocessing_pipeline.joblib"))
 
 
     # Save processed data as CSV; convert numpy array back to dataframe if needed
@@ -69,8 +70,6 @@ def run_preprocessing():
         os.path.join(output_dir, "train.csv"),
         index=False
     )
-
-    joblib
 
     print("Processed data is: ", processed_data)
     return processed_data
