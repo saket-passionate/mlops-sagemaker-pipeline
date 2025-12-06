@@ -21,6 +21,8 @@ def model_fn(model_dir):
     model = joblib.load(model_path)
     preprocessor = joblib.load(preprocessor_path)
 
+    print({"model": model, "preprocessor": preprocessor})
+
     return {"model": model, "preprocessor": preprocessor}
 
 ## 2. Process INPUT
@@ -65,8 +67,11 @@ def predict_fn(input_data, model_data):
     """
     preprocessor = model_data["preprocessor"]
     model = model_data["model"]
+    print("Input data is: ", input_data)
     
     X_transformed = preprocessor.transform(input_data)
+    print("X_transformed is :", X_transformed)
+    
     prediction = model.predict(X_transformed)
     return prediction
 
