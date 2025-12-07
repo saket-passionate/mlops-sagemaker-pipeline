@@ -50,7 +50,12 @@ def input_fn(request_body, content_type):
     
     elif content_type == "application/json":
         data = request_body
-        print("The type if incoming data is: ", type(data))
+        print("The incoming data is: ", type(data))
+        
+        import json
+        data = json.loads(data)
+        print("The data after json.loads() is: ", data)
+        
         X = pd.DataFrame(data)
         print("The output data frame is: ", X)
         
