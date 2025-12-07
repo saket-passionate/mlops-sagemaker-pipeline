@@ -55,7 +55,9 @@ def run_preprocessing():
 
     pipeline = make_pipeline(preprocessor)
     processed_data = pipeline.fit_transform(X)
+    print("The preprocessed data is: ", processed_data)
     # Make sure output directory exists
+    print("The shape of nd arrray processed data is: " ,processed_data.shape)
     output_dir = "/opt/ml/processing/train"
     os.makedirs(output_dir, exist_ok=True)
 
@@ -78,4 +80,13 @@ if __name__ == "__main__":
     print("Processing job completed successfully.")
     sys.stdout.flush()
     run_preprocessing()
+    """
+    import joblib
+    model = joblib.load('preprocessing_pipeline.joblib')
+    df = pd.read_csv('island_data.csv')
+    print("Loaded dataframe:\n", df.head())
+    # Separate features + target
+    X = df[["island", "gender", "age"]]
+    print(model.transform(X))
+    """
     

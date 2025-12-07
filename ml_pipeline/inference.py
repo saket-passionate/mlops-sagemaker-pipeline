@@ -57,7 +57,7 @@ def input_fn(request_body, content_type):
         print("The data after json.loads() is: ", data)
         
         df= pd.DataFrame(data)
-        X = df[["island", "gender", "age"]]
+        X = df[["profession", "gender", "age"]]
         print("The output data frame is: ", X)
         print("Shape of the data frame is: ", X.shape)
         
