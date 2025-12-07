@@ -59,6 +59,7 @@ def input_fn(request_body, content_type):
         df= pd.DataFrame(data)
         X = df[["island", "gender", "age"]]
         print("The output data frame is: ", X)
+        print("Shape of the data frame is: ", X.shape)
         
 
     return X
@@ -74,10 +75,14 @@ def predict_fn(input_data, model_data):
     """
     preprocessor = model_data["preprocessor"]
     model = model_data["model"]
-    print("Input data is: ", input_data)
+    print("Input data is: ", input_data.head())
+    print("Input data:", input_data)
+
+
     
     X_transformed = preprocessor.transform(input_data)
-    print("X_transformed is:", X_transformed)
+    print("X_transformed is:", X_transformed.head())
+    print("Transformed shape:", X_transformed.shape)
     
     prediction = model.predict(X_transformed)
     print("Model prediction is: ", X_transformed)
