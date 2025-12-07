@@ -49,7 +49,9 @@ def input_fn(request_body, content_type):
         return data
     
     elif content_type == "application/json":
+        data = request_body
         print("The incoming data is: ", data)
+        
         # Check if SageMaker wrapped it in "instances"
         if isinstance(data, dict) and "instances" in data:
             data = data["instances"]
@@ -76,9 +78,10 @@ def predict_fn(input_data, model_data):
     print("Input data is: ", input_data)
     
     X_transformed = preprocessor.transform(input_data)
-    print("X_transformed is :", X_transformed)
+    print("X_transformed is:", X_transformed)
     
     prediction = model.predict(X_transformed)
+    print("Model prediction is: ", X_transformed)
     return prediction
 
 
