@@ -48,7 +48,7 @@ def run_preprocessing():
 
     preprocessor = ColumnTransformer(
         [
-            ("categorical", categorical_preprocessor, ["island", "gender"]),
+            ("categorical", categorical_preprocessor, ["profession", "gender"]),
             ("numerical", numeric_preprocessor, ["age"]),
         ]
     )
