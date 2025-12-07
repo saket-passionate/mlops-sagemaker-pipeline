@@ -56,15 +56,16 @@ def input_fn(request_body, content_type):
         data = json.loads(data)
         print("The data after json.loads() is: ", data)
         
-        X = pd.DataFrame(data)
+        df= pd.DataFrame(data)
+        X = df[["island", "gender", "age"]]
         print("The output data frame is: ", X)
         
 
-        return X
+    return X
 
 
     
-    return ValueError(f"Unsupported content type: {content_type}")
+
 
 def predict_fn(input_data, model_data):
     """
