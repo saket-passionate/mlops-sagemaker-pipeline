@@ -50,17 +50,10 @@ def input_fn(request_body, content_type):
     
     elif content_type == "application/json":
         data = request_body
-        print("The incoming data is: ", data)
+        print("The type if incoming data is: ", type(data))
+        X = pd.DataFrame(data)
+        print("The output data frame is: ", X)
         
-        # Check if SageMaker wrapped it in "instances"
-        if isinstance(data, dict) and "instances" in data:
-            data = data["instances"]
-
-        # Ensure it's a list of dicts or list of lists
-        if isinstance(data, list):
-            X = pd.DataFrame(data)
-        else:
-            raise ValueError(f"JSON input must be a list of dicts or list of lists, got {type(data)}")
 
         return X
 
