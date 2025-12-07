@@ -22,7 +22,7 @@ def run_preprocessing():
     print("Loaded dataframe:\n", df.head())
 
     # Separate features + target
-    X = df[["island", "gender", "age"]]
+    X = df[["profession", "gender", "age"]]
     y = df["target"]
 
     print("X head:\n", X.head())
