@@ -79,7 +79,7 @@ def run_preprocessing():
 
 
     # Save processed data as CSV; convert numpy array back to dataframe if needed
-    pd.DataFrame(processed_data.toarray() if hasattr(processed_data, "toarray") else processed_data).to_csv(
+    processed_df.to_csv(
         os.path.join(output_dir, "train.csv"),
         index=False
     )
