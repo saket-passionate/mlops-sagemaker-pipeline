@@ -61,9 +61,21 @@ def run_preprocessing():
     output_dir = "/opt/ml/processing/train"
     os.makedirs(output_dir, exist_ok=True)
 
+    # Convert to DataFrame
+    if hasattr(processed_data, "toarray"):  # sparse matrix from OneHotEncoder
+        processed_df = pd.DataFrame(processed_data.toarray())
+    else:
+        processed_df = pd.DataFrame(processed_data)
+    
+    # Add target column back
+    processed_df["target"] = y.values
+    print("Processed DataFrame with target:\n", processed_df.head())
+
     import joblib
     # Save the fitted preprocessing pipeline
     joblib.dump(pipeline, os.path.join(output_dir, "preprocessing_pipeline.joblib"))
+
+
 
 
     # Save processed data as CSV; convert numpy array back to dataframe if needed
