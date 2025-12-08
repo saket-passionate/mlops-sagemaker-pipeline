@@ -77,11 +77,7 @@ def predict_fn(input_data, model_data):
     model = model_data["model"]
     print("Input data is: ", input_data.head())
     print("Input data:", input_data)
-
-
-    
     X_transformed = preprocessor.transform(input_data)
-    print("X_transformed is:", X_transformed.head())
     print("Transformed shape:", X_transformed.shape)
     
     prediction = model.predict(X_transformed)
