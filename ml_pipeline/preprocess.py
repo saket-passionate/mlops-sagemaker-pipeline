@@ -68,7 +68,7 @@ def run_preprocessing():
         processed_df = pd.DataFrame(processed_data)
     
     # Add target column back
-    processed_df["target"] = y.values
+    processed_df["target"] = y
     print("Processed DataFrame with target:\n", processed_df.head())
 
     import joblib

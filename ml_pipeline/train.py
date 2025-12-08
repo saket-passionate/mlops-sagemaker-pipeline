@@ -19,8 +19,9 @@ if __name__ == "__main__":
     df = pd.read_csv(train_data_path, header=None)
 
     # Assuming last column is the label
-    X_train = df.iloc[:, :-1]
-    y_train = df.iloc[:, -1]
+    y_train = df[['target']]
+    X_train = df.drop(columns=['target'])
+
 
     # Train a logistic regression model
     model = LinearRegression()
