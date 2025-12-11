@@ -62,6 +62,17 @@ class MlopsPipelineStack(Stack):
                 ]
             )
         )
+
+        lamda_trigger = _lambda.Function(self,
+                                         runtime=_lambda.Runtime.PYTHON_3_12,
+                                         handler="sagemaker_trigger.handler",
+                                         code = _lambda.Code.from_asset("../lambda_package.zip"),
+                                         memory_size=256)
+        lamda_trigger.add_to_role_policy(iam.PolicyStatement(
+            actions=["s3:GetObject"],
+            resources=["arn:aws:s3:::mlopspipelinestack-mlopsmodelbucket88eed9f0-lzsbdgp0dgqy/*"]
+
+        ))
         
       
         ## Create Deployment Lambda Function
