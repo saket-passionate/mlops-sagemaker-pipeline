@@ -77,6 +77,16 @@ class MlopsPipelineStack(Stack):
             resources=["arn:aws:s3:::mlopspipelinestack-mlopsmodelbucket88eed9f0-lzsbdgp0dgqy/*"]
         ))
         
+        # Add permission to trigger sagemaker pipeline
+        lambda_sagemaker.add_to_role_policy(iam.PolicyStatement(
+            actions=[
+                "sagemaker:StartPipelineExecution",
+                "sagemaker:DescribePipeline",
+                "sagemaker:ListPipelineExecutions"
+            ]
+            resources=["*"]
+        ))
+        
       
         ## Create Deployment Lambda Function
         lambda_fn = _lambda.Function(self, "InferenceFucntion",
