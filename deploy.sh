@@ -44,7 +44,7 @@ cd cloud_infra
 cd ..
 
 cd ml_pipeline
-echo "Running SageMaker Pipeline"
-python run_pipeline.py
+#echo "Running SageMaker Pipeline"
+#python run_pipeline.py
 
-echo "Build and Deployment Completed Successfully!"
+#echo "Build and Deployment Completed Successfully!"
