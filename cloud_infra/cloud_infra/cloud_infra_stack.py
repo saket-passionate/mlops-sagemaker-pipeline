@@ -83,7 +83,7 @@ class MlopsPipelineStack(Stack):
                 "sagemaker:StartPipelineExecution",
                 "sagemaker:DescribePipeline",
                 "sagemaker:ListPipelineExecutions"
-            ]
+            ],
             resources=["*"]
         ))
         
