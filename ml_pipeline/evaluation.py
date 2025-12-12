@@ -21,7 +21,8 @@ if __name__ == "__main__":
 
     # Load evaluation dataset (expected by your pipeline)
     eval_data_path = "/opt/ml/processing/train/train.csv"  # adjust path as needed
-    df = pd.read_csv(eval_data_path, header=None)
+    df = pd.read_csv(eval_data_path)
+    print(df.head())
 
     # Split features and targets (last column assumed target)
     X_eval = df.iloc[:, :-1]
