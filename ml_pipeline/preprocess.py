@@ -73,7 +73,7 @@ def run_preprocessing():
         processed_df = pd.DataFrame(processed_data)
     
     # Add target column back
-    processed_df["target"] = y
+    processed_df["trip_score"] = y
     print("Processed DataFrame with target:\n", processed_df.head())
 
     import joblib
