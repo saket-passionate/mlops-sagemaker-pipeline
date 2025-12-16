@@ -91,7 +91,6 @@ def run_preprocessing():
     return processed_data
 
 if __name__ == "__main__":
-    sys.stdout.flush()
     run_preprocessing()
     print("Processing job completed successfully.")
     
