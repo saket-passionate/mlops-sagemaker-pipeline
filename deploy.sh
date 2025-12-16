@@ -31,7 +31,7 @@ cd ..
 
 echo "Uploading ML Scripts"
 cd ml_pipeline
-aws s3 cp island_data.csv s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data/
+aws s3 cp toronto_telematics_realistic.csv s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data/
 aws s3 cp preprocess.py s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/code/preprocess.py
 aws s3 cp evaluation.py s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/evaluation/input/code/evaluation.py
 aws s3 cp train.py s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/training/input/code/train.py
@@ -44,7 +44,7 @@ cd cloud_infra
 cd ..
 
 cd ml_pipeline
-#echo "Running SageMaker Pipeline"
-#python run_pipeline.py
+echo "Running SageMaker Pipeline"
+python run_pipeline.py
 
-#echo "Build and Deployment Completed Successfully!"
+echo "Build and Deployment Completed Successfully!"

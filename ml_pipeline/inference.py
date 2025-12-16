@@ -57,7 +57,9 @@ def input_fn(request_body, content_type):
         print("The data after json.loads() is: ", data)
         
         df= pd.DataFrame(data)
-        X = df[["profession", "gender", "age"]]
+        features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp',
+                    'vehicle_type', 'road_type', 'weather', 'driver_id', 'driver_style']
+        X = df[features]
         print("The output data frame is: ", X)
         print("Shape of the data frame is: ", X.shape)
         
@@ -81,7 +83,7 @@ def predict_fn(input_data, model_data):
     print("Transformed shape:", X_transformed.shape)
     
     prediction = model.predict(X_transformed)
-    print("Model prediction is: ", X_transformed)
+    print("Model prediction is: ", prediction)
     return prediction
 
 

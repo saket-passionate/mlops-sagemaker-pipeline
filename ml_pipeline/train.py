@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import shutil
 from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 import joblib  # use joblib directly, not from sklearn.externals
 
 
@@ -20,8 +21,8 @@ if __name__ == "__main__":
 
     # Assuming last column is the label
     # Separate features + label
-    X_train = df.drop(columns=["target"])
-    y_train = df["target"].astype(float)   # must be numeric
+    X_train = df.drop(columns=["trip_score"])
+    y_train = df["trip_score"].astype(float)   # must be numeric
 
     print("Head of X_train:")
     print(X_train.head())
@@ -29,8 +30,8 @@ if __name__ == "__main__":
     print("Head of y_train:")
     print(y_train.head())
 
-    # Train a logistic regression model
-    model = LinearRegression()
+    # Train RandomForest model
+    model = RandomForestRegressor(n_estimators=100, max_depth=15, random_state=42)
     model.fit(X_train, y_train)
 
     # SageMaker sets this environment variable as model artifact path for saving

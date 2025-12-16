@@ -15,15 +15,19 @@ logging.basicConfig(level=logging.INFO)
 logging.info("Logging enabled")
 
 def run_preprocessing():
-    input_data_path = os.path.join("/opt/ml/processing/input", "island_data.csv")
+    input_data_path = os.path.join("/opt/ml/processing/input", "toronto_telematics_realistic.csv")
     
     df = pd.read_csv(input_data_path)
 
     print("Loaded dataframe:\n", df.head())
 
     # Separate features + target
-    X = df[["profession", "gender", "age"]]
-    y = df["target"]
+    X = df.drop(columns=['timestamp', 'trip_score'])
+    y = df["trip_score"]
+
+    # Separate numerical and cateogorical features
+    numeric_features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp']
+    categorical_features = ['vehicle_type', 'road_type', 'weather', 'driver_id', 'driver_style']
 
     print("X head:\n", X.head())
     print("y head:\n", y.head())
@@ -48,14 +52,15 @@ def run_preprocessing():
 
     preprocessor = ColumnTransformer(
         [
-            ("categorical", categorical_preprocessor, ["profession", "gender"]),
-            ("numerical", numeric_preprocessor, ["age"]),
+            ("categorical", categorical_preprocessor, categorical_features),
+            ("numerical", numeric_preprocessor, numeric_features),
         ]
     )
 
     pipeline = make_pipeline(preprocessor)
     processed_data = pipeline.fit_transform(X)
     print("The preprocessed data is: ", processed_data)
+    
     # Make sure output directory exists
     print("The shape of nd arrray processed data is: " ,processed_data.shape)
     output_dir = "/opt/ml/processing/train"
@@ -76,8 +81,6 @@ def run_preprocessing():
     joblib.dump(pipeline, os.path.join(output_dir, "preprocessing_pipeline.joblib"))
 
 
-
-
     # Save processed data as CSV; convert numpy array back to dataframe if needed
     processed_df.to_csv(
         os.path.join(output_dir, "train.csv"),
@@ -88,17 +91,8 @@ def run_preprocessing():
     return processed_data
 
 if __name__ == "__main__":
-    import sys
-    print("Processing job completed successfully.")
     sys.stdout.flush()
     run_preprocessing()
-    """
-    import joblib
-    model = joblib.load('preprocessing_pipeline.joblib')
-    df = pd.read_csv('island_data.csv')
-    print("Loaded dataframe:\n", df.head())
-    # Separate features + target
-    X = df[["island", "gender", "age"]]
-    print(model.transform(X))
-    """
+    print("Processing job completed successfully.")
+    
     
