@@ -198,8 +198,8 @@ class MlopsPipelineStack(Stack):
 
         sagemaker.CfnFeatureGroup(
             self,
-            description="Feature group for storing driver entity features",
             "DriverFeatureGroup",
+            description="Feature group for storing driver entity features",
             feature_group_name="driver_features_fg",
             record_identifier_feature_name="driver_id",
             feature_definitions=[
@@ -221,22 +221,20 @@ class MlopsPipelineStack(Stack):
                 ),
                 sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
                     feature_name="driver_style",
-                    feature_style="String"
+                    feature_type="String"
                 ),
+                
+            ],
                 online_store_config=sagemaker.CfnFeatureGroup.OnlineStoreConfigProperty(
                     enable_online_store=True
                 ),
+                
                 offline_store_config=sagemaker.CfnFeatureGroup.OfflineStoreConfigProperty(
                     s3_storage_config=sagemaker.CfnFeatureGroup.S3StorageConfigProperty(
                         s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/feature_store/driver"
                     )
                 ),
-                role_
-
-
-
-
-            ]
+                role_arn = feature_store_role
 
 
         )
