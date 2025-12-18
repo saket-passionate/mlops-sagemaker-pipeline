@@ -7,6 +7,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import joblib
+from datetime import datetime
+from sagemaker.feature_store.feature_group import FeatureGroup
 
 
 print("Processing step started")
@@ -26,8 +28,24 @@ def run_preprocessing():
     y = df["trip_score"]
 
     # Separate numerical and cateogorical features
-    numeric_features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp']
-    categorical_features = ['vehicle_type', 'road_type', 'weather', 'driver_id', 'driver_style']
+    numeric_features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp', 'driver_age', 'driver_safety_score']
+    categorical_features = ['vehicle_type', 'road_type', 'weather', 'driver_gender', 'driver_style']
+
+    driver_features = df['driver_id', 'driver_age',
+                        'driver_gender', 'driver_style', 'driver_safety_score'].drop_duplicates(subset=["driver_id"])
+    
+    driver_features["event_time"] = datetime.utcnow().issoformat()
+
+    # Ingest features into Feature Store (Do not Create)
+    fg = FeatureGroup(
+        name="driver_features_fg",
+    )
+
+    fg.ingest(
+        data_frame=driver_features,
+        max_workers=3,
+        wait=True
+    )
 
     print("X head:\n", X.head())
     print("y head:\n", y.head())
@@ -91,6 +109,7 @@ def run_preprocessing():
     return processed_data
 
 if __name__ == "__main__":
+
     run_preprocessing()
     print("Processing job completed successfully.")
     

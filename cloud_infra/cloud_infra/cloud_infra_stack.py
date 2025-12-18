@@ -12,7 +12,10 @@ from aws_cdk import (
     aws_events as events,
     aws_events_targets as targets,
     aws_sns as sns,
-    aws_sns_subscriptions as subscriptions
+    aws_sns_subscriptions as subscriptions,
+    aws_codepipeline as codepipeline,
+    aws_codebuild as codebuild,
+    aws_codepipeline_actions as codepipelineactions
 )
 from aws_cdk.aws_iam import Role
 from constructs import Construct
@@ -30,6 +33,9 @@ class MlopsPipelineStack(Stack):
         #     self, "CloudInfraQueue",
         #     visibility_timeout=Duration.seconds(300),
         # )
+
+        # Create a Code Pipeline using AWS CDK
+
 
         # Create a S3 Bucket
         bucket = s3.Bucket(self, "MlopsModelBucket", versioned=True)
@@ -176,3 +182,61 @@ class MlopsPipelineStack(Stack):
         )
 
         sns_trigger_rule.add_target(targets.SnsTopic(topic=sns_publish_topic))
+
+
+        # Feature Store Groups & Roles
+        feature_store_role = iam.Role(
+            self,
+            "FeatureStoreRole",
+            assumed_by=iam.ServicePrincipal('sagemaker.amazonaws.com'),
+            managed_policies=[
+                iam.ManagedPolicy.from_aws_managed_policy_name(
+                    "AmazonSagemakerFullAccess"
+                )
+            ]
+        )
+
+        sagemaker.CfnFeatureGroup(
+            self,
+            description="Feature group for storing driver entity features",
+            "DriverFeatureGroup",
+            feature_group_name="driver_features_fg",
+            record_identifier_feature_name="driver_id",
+            feature_definitions=[
+                sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
+                    feature_name="driver_id",
+                    feature_type="String",
+                ),
+                sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
+                    feature_name='driver_age',
+                    feature_type="Integral"
+                ),
+                sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
+                    feature_name="driver_gender",
+                    feature_type="String"
+                ),
+                sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
+                    feature_name="driver_safety_score",
+                    feature_type="Fractional"
+                ),
+                sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
+                    feature_name="driver_style",
+                    feature_style="String"
+                ),
+                online_store_config=sagemaker.CfnFeatureGroup.OnlineStoreConfigProperty(
+                    enable_online_store=True
+                ),
+                offline_store_config=sagemaker.CfnFeatureGroup.OfflineStoreConfigProperty(
+                    s3_storage_config=sagemaker.CfnFeatureGroup.S3StorageConfigProperty(
+                        s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/feature_store/driver"
+                    )
+                ),
+                role_
+
+
+
+
+            ]
+
+
+        )
