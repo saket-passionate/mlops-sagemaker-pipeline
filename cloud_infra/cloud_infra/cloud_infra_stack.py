@@ -239,4 +239,5 @@ class MlopsPipelineStack(Stack):
                     "S3Uri": "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
                     }
             },
+            role_arn=feature_store_role.role_arn
         )
