@@ -231,12 +231,12 @@ class MlopsPipelineStack(Stack):
                 
             ],
             online_store_config={
-                "enableOnlineStore": True
+                "EnableOnlineStore": True
             },
             offline_store_config={
-                "s3StorageConfig":{
+                "S3StorageConfig":{
                     # CDK will provision a default bucket if one is not specified
-                    "s3Uri": "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
+                    "S3Uri": "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
                     }
             },
         )
