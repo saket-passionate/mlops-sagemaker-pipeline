@@ -235,7 +235,7 @@ class MlopsPipelineStack(Stack):
                         s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/feature_store/driver"
                     )
                 ),
-                role_arn = feature_store_role
+                role_arn = feature_store_role.role_arn
 
 
         )
