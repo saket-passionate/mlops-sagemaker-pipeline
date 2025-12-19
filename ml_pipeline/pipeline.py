@@ -88,7 +88,8 @@ def get_pipeline(
                 destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/",
             ),
         ],
-        code=S3_PREPROCESSING_URI,
+        code='preprocess.py',
+        source_dir="Demo/processing/input/code"
     )
 
     model_path = (

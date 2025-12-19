@@ -1,0 +1,5 @@
+sagemaker==2.224.0
+boto3>=1.26.0
+pandas
+scikit-learn
+# anything else you need
