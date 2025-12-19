@@ -230,15 +230,13 @@ class MlopsPipelineStack(Stack):
                 ),
                 
             ],
-            online_store_config=sagemaker.CfnFeatureGroup.OnlineStoreConfigProperty(
-                enable_online_store=True
-            ),
-            offline_store_config=sagemaker.CfnFeatureGroup.OfflineStoreConfigProperty(
-                s3_storage_config=sagemaker.CfnFeatureGroup.S3StorageConfigProperty(
-                    s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
-                    )
-            ),
-            role_arn = feature_store_role.role_arn
-
-
+            online_store_config={
+                "enableOnlineStore": True
+            },
+            offline_store_config={
+                "s3StorageConfig":{
+                    # CDK will provision a default bucket if one is not specified
+                    "s3Uri": "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
+                    }
+            },
         )
