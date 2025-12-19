@@ -224,18 +224,21 @@ class MlopsPipelineStack(Stack):
                     feature_name="driver_style",
                     feature_type="String"
                 ),
+                sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
+                    feature_name="event_time",
+                    feature_type="String"
+                ),
                 
             ],
-                online_store_config=sagemaker.CfnFeatureGroup.OnlineStoreConfigProperty(
-                    enable_online_store=True
-                ),
-
-                offline_store_config=sagemaker.CfnFeatureGroup.OfflineStoreConfigProperty(
-                    s3_storage_config=sagemaker.CfnFeatureGroup.S3StorageConfigProperty(
-                        s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/feature_store/driver"
+            online_store_config=sagemaker.CfnFeatureGroup.OnlineStoreConfigProperty(
+                enable_online_store=True
+            ),
+            offline_store_config=sagemaker.CfnFeatureGroup.OfflineStoreConfigProperty(
+                s3_storage_config=sagemaker.CfnFeatureGroup.S3StorageConfigProperty(
+                    s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
                     )
-                ),
-                role_arn = feature_store_role.role_arn
+            ),
+            role_arn = feature_store_role.role_arn
 
 
         )
