@@ -1,4 +1,10 @@
 import os
+
+import subprocess
+import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "sagemaker"])
+
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
