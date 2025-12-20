@@ -108,9 +108,22 @@ def get_pipeline(
     # NOW use ProcessingStep with step_args (no source_dir here)
     processing_step = ProcessingStep(
         name="PreprocessData",
-        step_args=step_args
+        code=S3_PREPROCESSING_URI,
+        inputs=[
+            ProcessingInput(
+                source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data",
+                destination="/opt/ml/processing/input",
+            ),
+        ],
+        outputs=[
+            ProcessingOutput(
+                output_name="train",
+                source="/opt/ml/processing/train",
+                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/",
+            ),
+        ]
         
-        )
+    )
    
     model_path = (
         "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/"
