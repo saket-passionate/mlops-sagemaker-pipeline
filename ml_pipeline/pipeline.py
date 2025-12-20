@@ -107,6 +107,7 @@ def get_pipeline(
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
     processing_step = ProcessingStep(
+        processor=sklearn_framework_processor,
         name="PreprocessData",
         code=S3_PREPROCESSING_URI,
         inputs=[
