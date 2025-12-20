@@ -72,37 +72,8 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/sklearn-preprocess",
     )
 
-    sklearn_framework_processor = FrameworkProcessor(
-        estimator_cls=SKLearn,
-        framework_version="1.2-1",
-        role=role,
-        instance_type=processing_instance_type,
-        instance_count=processing_instance_count,
-        sagemaker_session=sagemaker_session,
-        base_job_name=f"{base_job_prefix}/sklearn-preprocess"
-    )
+    
 
-
-    step_args = sklearn_framework_processor.run(
-        job_name='Preprocess Data',
-        code=S3_PREPROCESSING_URI,
-        source_dir="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/"
-    "Demo/processing/input/code",
-        dependencies=['requirements.txt'],
-        inputs=[
-            ProcessingInput(
-                source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data",
-                destination="/opt/ml/processing/input",
-            ),
-        ],
-        outputs=[
-            ProcessingOutput(
-                output_name="train",
-                source="/opt/ml/processing/train",
-                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/",
-            ),
-        ],
-    )
 
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
