@@ -71,9 +71,7 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/sklearn-preprocess",
     )
 
-    # Data preprocessing step
-    processing_step = ProcessingStep(
-        name="PreprocessData",
+    step_args = sklearn_processor.run(
         processor=sklearn_processor,
         inputs=[
             ProcessingInput(
@@ -92,6 +90,14 @@ def get_pipeline(
         source_dir="Demo/processing/input/code"
     )
 
+    # Data preprocessing step
+    # NOW use ProcessingStep with step_args (no source_dir here)
+    processing_step = ProcessingStep(
+        name="PreprocessData",
+        step_args=step_args
+        
+        )
+   
     model_path = (
         "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/"
         "Demo/training/model/"
