@@ -74,7 +74,7 @@ def get_pipeline(
 
     sklearn_framework_processor = FrameworkProcessor(
         estimator_cls=SKLearn,
-        framework_version="1.2.1",
+        framework_version="1.2-1",
         role=role,
         instance_type=processing_instance_type,
         instance_count=processing_instance_count,
