@@ -11,6 +11,7 @@ from sagemaker.workflow.steps import ProcessingStep, TrainingStep, CreateModelSt
 from sagemaker.workflow.properties import PropertyFile
 from sagemaker.model import Model
 from sagemaker.workflow.step_collections import RegisterModel
+from sagemaker.processing import FrameworkProcessor
 
 
 # S3 URIs for preprocessing and evaluation scripts
@@ -71,9 +72,22 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/sklearn-preprocess",
     )
 
-    step_args = sklearn_processor.run(
+    sklearn_framework_processor = FrameworkProcessor(
+        estimator_cls=SKLearn,
+        framework_version="1.2.1",
+        role=role,
+        instance_type=processing_instance_type,
+        instance_count=processing_instance_count,
+        sagemaker_session=sagemaker_session,
+        base_job_name=f"{base_job_prefix}/sklearn-preprocess"
+    )
+
+
+    step_args = sklearn_framework_processor.run(
         job_name='Preprocess Data',
-        dependencies=["requirements.txt"],
+        code='preprocess.py',
+        source_dir="Demo/processing/input/code",
+        dependencies=['requirements.txt'],
         inputs=[
             ProcessingInput(
                 source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data",
@@ -87,8 +101,6 @@ def get_pipeline(
                 destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/",
             ),
         ],
-        code='preprocess.py',
-        source_dir="Demo/processing/input/code"
     )
 
     # Data preprocessing step
