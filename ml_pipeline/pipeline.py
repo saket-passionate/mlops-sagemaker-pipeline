@@ -85,8 +85,9 @@ def get_pipeline(
 
     step_args = sklearn_framework_processor.run(
         job_name='Preprocess Data',
-        code='preprocess.py',
-        source_dir="Demo/processing/input/code",
+        code=S3_PREPROCESSING_URI,
+        source_dir="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/"
+    "Demo/processing/input/code",
         dependencies=['requirements.txt'],
         inputs=[
             ProcessingInput(
