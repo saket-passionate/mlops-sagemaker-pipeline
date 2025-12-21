@@ -63,8 +63,11 @@ def run_preprocessing():
                         'driver_gender', 'driver_style', 'driver_safety_score']].drop_duplicates(subset=["driver_id"])
     
     driver_features["event_time"] = datetime.utcnow().isoformat()
+    session = get_session(region=region, bucket=bucket)
+    print("Sagemaker session is: ", session)
 
     # Ingest features into Feature Store (Do not Create)
+    """
     sagemaker_session = get_session(region, bucket=bucket)
     fg = FeatureGroup(
         name="driver_features_fg",
@@ -76,6 +79,7 @@ def run_preprocessing():
         max_workers=4,
         wait=True
     )
+    """
 
     print("======Ingested Features into Offline Feature Store======")
 
