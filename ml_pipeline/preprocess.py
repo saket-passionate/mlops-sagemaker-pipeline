@@ -2,6 +2,8 @@ import subprocess
 import sys
 import os
 
+from ml_pipeline.pipeline import get_session
+
 
 print("=== INSTALLING ALL DEPENDENCIES MANUALLY ===")
 
@@ -45,6 +47,11 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logging.info("Logging enabled")
 
+region = 'ca-central-1'
+bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp'
+
+sagemaker_session = get_session(region, bucket=bucket)
+
 def run_preprocessing():
     input_data_path = os.path.join("/opt/ml/processing/input", "toronto_telematics_realistic.csv")
     
@@ -68,6 +75,7 @@ def run_preprocessing():
     # Ingest features into Feature Store (Do not Create)
     fg = FeatureGroup(
         name="driver_features_fg",
+        sagemaker_session=sagemaker_session
     )
 
     fg.ingest(
