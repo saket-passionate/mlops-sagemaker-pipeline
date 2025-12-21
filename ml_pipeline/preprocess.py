@@ -60,8 +60,8 @@ def run_preprocessing():
     numeric_features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp', 'driver_age', 'driver_safety_score']
     categorical_features = ['vehicle_type', 'road_type', 'weather', 'driver_gender', 'driver_style']
 
-    driver_features = df['driver_id', 'driver_age',
-                        'driver_gender', 'driver_style', 'driver_safety_score'].drop_duplicates(subset=["driver_id"])
+    driver_features = df[['driver_id', 'driver_age',
+                        'driver_gender', 'driver_style', 'driver_safety_score']].drop_duplicates(subset=["driver_id"])
     
     driver_features["event_time"] = datetime.utcnow().issoformat()
 
