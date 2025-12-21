@@ -13,8 +13,8 @@ subprocess.check_call([
     sys.executable, "-m", "pip", "install",
     "sagemaker==2.254.1",
     "sagemaker-core==1.0.64",
-    "boto3==1.42.14",
-    "boto3core==1.42.14",
+    "boto3==1.40.3",
+    "boto3core==1.40.3",
     "pandas",
     "scikit-learn"
 ])
