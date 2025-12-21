@@ -2,6 +2,8 @@ import subprocess
 import sys
 import os
 
+import boto3
+
 from ml_pipeline.pipeline import get_session
 
 
@@ -50,7 +52,19 @@ logging.info("Logging enabled")
 region = 'ca-central-1'
 bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp'
 
-sagemaker_session = get_session(region, bucket=bucket)
+def get_session(region: str = "ca-central-1", bucket: str = "") -> sagemaker.session.Session:
+    """
+    Creates and returns a SageMaker session for the specified AWS region.
+    Optionally specifies a default S3 bucket.
+    """
+    boto_session = boto3.Session(region_name=region)
+    sagemaker_client = boto_session.client("sagemaker")
+
+    return sagemaker.session.Session(
+        boto_session=boto_session,
+        sagemaker_client=sagemaker_client,
+        default_bucket=bucket,
+    )
 
 def run_preprocessing():
     input_data_path = os.path.join("/opt/ml/processing/input", "toronto_telematics_realistic.csv")
@@ -73,6 +87,7 @@ def run_preprocessing():
     driver_features["event_time"] = datetime.utcnow().isoformat()
 
     # Ingest features into Feature Store (Do not Create)
+    sagemaker_session = get_session(region, bucket=bucket)
     fg = FeatureGroup(
         name="driver_features_fg",
         sagemaker_session=sagemaker_session
