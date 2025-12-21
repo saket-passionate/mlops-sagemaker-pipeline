@@ -63,7 +63,7 @@ def run_preprocessing():
     driver_features = df[['driver_id', 'driver_age',
                         'driver_gender', 'driver_style', 'driver_safety_score']].drop_duplicates(subset=["driver_id"])
     
-    driver_features["event_time"] = datetime.utcnow().issoformat()
+    driver_features["event_time"] = datetime.utcnow().isoformat()
 
     # Ingest features into Feature Store (Do not Create)
     fg = FeatureGroup(
@@ -72,9 +72,11 @@ def run_preprocessing():
 
     fg.ingest(
         data_frame=driver_features,
-        max_workers=3,
+        max_workers=4,
         wait=True
     )
+
+    print("======Ingested Features into Offline Feature Store======")
 
     print("X head:\n", X.head())
     print("y head:\n", y.head())
