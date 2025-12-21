@@ -11,7 +11,8 @@ print("=== INSTALLING ALL DEPENDENCIES MANUALLY ===")
 # Install everything you need
 subprocess.check_call([
     sys.executable, "-m", "pip", "install",
-    "sagemaker==2.224.0",
+    "sagemaker==2.254.1",
+    "sagemaker-core==1.0.64",
     "boto3==1.42.14",
     "boto3core==1.42.14",
     "pandas",
