@@ -5,14 +5,15 @@ import os
 import boto3
 
 
+
 print("=== INSTALLING ALL DEPENDENCIES MANUALLY ===")
 
 # Install everything you need
 subprocess.check_call([
     sys.executable, "-m", "pip", "install",
     "sagemaker==2.224.0",
-    "boto3==1.28.57",        
-    "botocore==1.31.85",  
+    "boto3==1.42.14",
+    "boto3core==1.42.14",
     "pandas",
     "scikit-learn"
 ])
