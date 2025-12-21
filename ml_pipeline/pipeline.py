@@ -65,7 +65,7 @@ def get_pipeline(
     # SKLearn preprocessor setup
     sklearn_processor = SKLearnProcessor(
         framework_version="1.2-1",
-        instance_type="m1.m4.xlarge",
+        instance_type="ml.t3.medium",
         instance_count=1,
         sagemaker_session=sagemaker_session,
         role=role,
