@@ -11,7 +11,8 @@ print("=== INSTALLING ALL DEPENDENCIES MANUALLY ===")
 subprocess.check_call([
     sys.executable, "-m", "pip", "install",
     "sagemaker==2.224.0",
-    "boto3>=1.26.0",
+    "boto3==1.28.57",        
+    "botocore==1.31.85",  
     "pandas",
     "scikit-learn"
 ])
