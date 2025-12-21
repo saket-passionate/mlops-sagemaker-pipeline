@@ -65,8 +65,8 @@ def get_pipeline(
     # SKLearn preprocessor setup
     sklearn_processor = SKLearnProcessor(
         framework_version="1.2-1",
-        instance_type=processing_instance_type,
-        instance_count=processing_instance_count,
+        instance_type="m1.m4.xlarge",
+        instance_count=1,
         sagemaker_session=sagemaker_session,
         role=role,
         base_job_name=f"{base_job_prefix}/sklearn-preprocess",
@@ -80,7 +80,7 @@ def get_pipeline(
     processing_step = ProcessingStep(
         processor=sklearn_processor,
         name="PreprocessData",
-        code=S3_PREPROCESSING_URI,
+        code='preprocess.py',
         inputs=[
             ProcessingInput(
                 source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data",
