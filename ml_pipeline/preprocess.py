@@ -2,36 +2,13 @@ import subprocess
 import sys
 import os
 
-import boto3
-
-
-
-print("=== INSTALLING ALL DEPENDENCIES MANUALLY ===")
-
-# Install everything you need
-subprocess.check_call([
-    sys.executable, "-m", "pip", "install",
-    "sagemaker==2.254.1",
-    "sagemaker-core==1.0.64",
-    "boto3==1.40.3",
-    "botocore==1.40.3",
-    "pandas",
-    "scikit-learn"
-])
-
-print("=== ALL PACKAGES INSTALLED ===")
-# Install sagemaker 2.x + REQUIRED dependency
-subprocess.check_call([
-    sys.executable, "-m", "pip", "install", 
-    "sagemaker==2.224.0", 
-    "importlib_metadata>=4.4.0"
-])
-
-print("=== SAGEMAKER 2.x INSTALLED SUCCESSFULLY ===")
 
 # Verify version
 import sagemaker
 print(f"SageMaker version: {sagemaker.__version__}")
+
+import boto3
+print(f"Boto3 version: {boto3.__version__}")
 
 import numpy as np
 import pandas as pd
