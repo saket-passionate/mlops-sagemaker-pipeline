@@ -4,8 +4,6 @@ import os
 
 import boto3
 
-from ml_pipeline.pipeline import get_session
-
 
 print("=== INSTALLING ALL DEPENDENCIES MANUALLY ===")
 
