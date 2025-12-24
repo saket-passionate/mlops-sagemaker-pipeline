@@ -67,7 +67,7 @@ def get_pipeline(
         role=role,
         sagemaker_session=sagemaker_session,
         instance_count=1,
-        instance_type='ml.m5g.large',
+        instance_type='ml.m5.large',
         base_job_name=f"{base_job_prefix}/custom-preprocess"
         )
 
