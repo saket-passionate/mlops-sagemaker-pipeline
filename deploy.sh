@@ -42,8 +42,8 @@ cd cloud_infra
 ../node_modules/.bin/cdk deploy --require-approval never
 cd ..
 
-# cd ml_pipeline
-# echo "Running SageMaker Pipeline"
-# python run_pipeline.py
+cd ml_pipeline
+echo "Running SageMaker Pipeline"
+python run_pipeline.py
 
 echo "ML System Infrastructure is Setup & Deployed"

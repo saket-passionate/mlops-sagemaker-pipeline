@@ -2,14 +2,6 @@ import subprocess
 import sys
 import os
 
-
-# Verify version
-import sagemaker
-print(f"SageMaker version: {sagemaker.__version__}")
-
-import boto3
-print(f"Boto3 version: {boto3.__version__}")
-
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -19,30 +11,13 @@ from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import joblib
 from datetime import datetime
-from sagemaker.feature_store.feature_group import FeatureGroup
+from sagemaker.feature_store import feature_group
 
 
 print("Processing step started")
 import logging
 logging.basicConfig(level=logging.INFO)
 logging.info("Logging enabled")
-
-region = 'ca-central-1'
-bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp'
-
-def get_session(region: str = "ca-central-1", bucket: str = "") -> sagemaker.session.Session:
-    """
-    Creates and returns a SageMaker session for the specified AWS region.
-    Optionally specifies a default S3 bucket.
-    """
-    boto_session = boto3.Session(region_name=region)
-    sagemaker_client = boto_session.client("sagemaker")
-
-    return sagemaker.session.Session(
-        boto_session=boto_session,
-        sagemaker_client=sagemaker_client,
-        default_bucket=bucket,
-    )
 
 def run_preprocessing():
     input_data_path = os.path.join("/opt/ml/processing/input", "toronto_telematics_realistic.csv")
@@ -63,8 +38,7 @@ def run_preprocessing():
                         'driver_gender', 'driver_style', 'driver_safety_score']].drop_duplicates(subset=["driver_id"])
     
     driver_features["event_time"] = datetime.utcnow().isoformat()
-    session = get_session(region=region, bucket=bucket)
-    print("Sagemaker session is: ", session)
+  
 
     # Ingest features into Feature Store (Do not Create)
     """

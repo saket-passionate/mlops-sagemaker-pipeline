@@ -72,13 +72,25 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/sklearn-preprocess",
     )
 
-    
+    custom_processor = FrameworkProcessor(
+        image_uri='252312373833.dkr.ecr.ca-central-1.amazonaws.com/sm-processing-telematics:latest',
+        role=role,
+        sagemaker_session=sagemaker_session,
+        instance_count=1,
+        instance_type='ml.t3.medium',
+        command=["python"],
+        ase_job_name=f"{base_job_prefix}/custom-preprocess",
+
+
+
+    )
+
 
 
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
     processing_step = ProcessingStep(
-        processor=sklearn_processor,
+        processor=custom_processor,
         name="PreprocessData",
         code='preprocess.py',
         inputs=[
