@@ -62,16 +62,6 @@ def get_pipeline(
     training_instance_type = ParameterString(name="TrainingInstanceType", default_value="ml.m4.xlarge")
     model_approval_status = ParameterString(name="ModelApprovalStatus", default_value="Approved")
 
-    # SKLearn preprocessor setup
-    sklearn_processor = SKLearnProcessor(
-        framework_version="1.2-1",
-        instance_type="ml.t3.medium",
-        instance_count=1,
-        sagemaker_session=sagemaker_session,
-        role=role,
-        base_job_name=f"{base_job_prefix}/sklearn-preprocess",
-    )
-
     custom_processor = FrameworkProcessor(
         image_uri='252312373833.dkr.ecr.ca-central-1.amazonaws.com/sm-processing-telematics:latest',
         role=role,
@@ -79,13 +69,9 @@ def get_pipeline(
         instance_count=1,
         instance_type='ml.t3.medium',
         command=["python"],
-        ase_job_name=f"{base_job_prefix}/custom-preprocess",
-
-
+        base_job_name=f"{base_job_prefix}/custom-preprocess",
 
     )
-
-
 
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
