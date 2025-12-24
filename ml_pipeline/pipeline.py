@@ -66,8 +66,8 @@ def get_pipeline(
         image_uri='252312373833.dkr.ecr.ca-central-1.amazonaws.com/sm-processing-telematics:latest',
         role=role,
         sagemaker_session=sagemaker_session,
-        instance_count=1,
-        instance_type="ml.m5.xlarge",
+        instance_count=processing_instance_count,
+        instance_type=processing_instance_type,
         base_job_name=f"{base_job_prefix}/custom-preprocess"
         )
 
