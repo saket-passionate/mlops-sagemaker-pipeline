@@ -11,7 +11,30 @@ from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import joblib
 from datetime import datetime
-from sagemaker.feature_store import feature_group
+from sagemaker.feature_store.feature_group import FeatureGroup
+import sagemaker
+import boto3
+
+
+
+
+def get_session(region: str = "ca-central-1", bucket: str = "") -> sagemaker.session.Session:
+    """
+    Creates and returns a SageMaker session for the specified AWS region.
+    Optionally specifies a default S3 bucket.
+    """
+    boto_session = boto3.Session(region_name=region)
+    sagemaker_client = boto_session.client("sagemaker")
+
+    return sagemaker.session.Session(
+        boto_session=boto_session,
+        sagemaker_client=sagemaker_client,
+        default_bucket=bucket,
+    )
+
+region = 'ca-central-1'
+role = 'arn:aws:iam::252312373833:role/MlopsPipelineStack-SageMakerExecutionRole7843F3B8-84gSLJ2pWKPJ'  
+bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp'  
 
 
 print("Processing step started")
@@ -45,7 +68,7 @@ def run_preprocessing():
     sagemaker_session = get_session(region, bucket=bucket)
     fg = FeatureGroup(
         name="driver_features_fg",
-        sagemaker_session=sagemaker_session
+        sagemaker_session=get_session(region=region, bucket=bucket)
     )
 
     fg.ingest(
@@ -54,6 +77,7 @@ def run_preprocessing():
         wait=True
     )
     """
+
 
     print("======Ingested Features into Offline Feature Store======")
 
