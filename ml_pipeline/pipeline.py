@@ -11,7 +11,7 @@ from sagemaker.workflow.steps import ProcessingStep, TrainingStep, CreateModelSt
 from sagemaker.workflow.properties import PropertyFile
 from sagemaker.model import Model
 from sagemaker.workflow.step_collections import RegisterModel
-from sagemaker.processing import FrameworkProcessor
+from sagemaker.processing import FrameworkProcessor, Processor
 
 
 # S3 URIs for preprocessing and evaluation scripts
@@ -62,15 +62,13 @@ def get_pipeline(
     training_instance_type = ParameterString(name="TrainingInstanceType", default_value="ml.m4.xlarge")
     model_approval_status = ParameterString(name="ModelApprovalStatus", default_value="Approved")
 
-    custom_processor = FrameworkProcessor(
+    custom_processor = Processor(
         image_uri='252312373833.dkr.ecr.ca-central-1.amazonaws.com/sm-processing-telematics:latest',
         role=role,
         sagemaker_session=sagemaker_session,
         instance_count=1,
         instance_type='ml.t3.medium',
-        command=["python"],
-        base_job_name=f"{base_job_prefix}/custom-preprocess",
-
+        base_job_name=f"{base_job_prefix}/custom-preprocess"
     )
 
     # Data preprocessing step
