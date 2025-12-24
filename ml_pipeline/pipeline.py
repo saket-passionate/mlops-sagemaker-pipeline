@@ -67,9 +67,9 @@ def get_pipeline(
         role=role,
         sagemaker_session=sagemaker_session,
         instance_count=1,
-        instance_type='ml.t3.medium',
+        instance_type='ml.m5g.large',
         base_job_name=f"{base_job_prefix}/custom-preprocess"
-    )
+        )
 
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
