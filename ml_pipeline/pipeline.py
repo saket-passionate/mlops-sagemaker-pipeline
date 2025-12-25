@@ -58,7 +58,7 @@ def get_pipeline(
 
     # Pipeline parameters for instance counts and types
     processing_instance_count = ParameterInteger(name="ProcessingInstanceCount", default_value=1)
-    processing_instance_type = ParameterString(name="ProcessingInstanceType", default_value="ml.m6g.xlarge")
+    processing_instance_type = ParameterString(name="ProcessingInstanceType", default_value="ml.m4.xlarge")
     training_instance_type = ParameterString(name="TrainingInstanceType", default_value="ml.m4.xlarge")
     model_approval_status = ParameterString(name="ModelApprovalStatus", default_value="Approved")
 
@@ -78,7 +78,7 @@ def get_pipeline(
         command=["python3"],
         role=role,
         base_job_name=f"{base_job_prefix}/custom-preprocess",
-        instance_type="ml.g5.xlarge",
+        instance_type="ml.m4.xlarge",
         instance_count=2
     )
 
