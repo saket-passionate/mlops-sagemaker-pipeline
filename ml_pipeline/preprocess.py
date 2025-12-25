@@ -64,7 +64,7 @@ def run_preprocessing():
   
 
     # Ingest features into Feature Store (Do not Create)
-    """
+    
     sagemaker_session = get_session(region, bucket=bucket)
     fg = FeatureGroup(
         name="driver_features_fg",
@@ -76,7 +76,7 @@ def run_preprocessing():
         max_workers=4,
         wait=True
     )
-    """
+    
 
 
     print("======Ingested Features into Offline Feature Store======")
