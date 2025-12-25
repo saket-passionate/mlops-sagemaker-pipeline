@@ -85,7 +85,7 @@ def get_pipeline(
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
     processing_step = ProcessingStep(
-        processor=custom_processor,
+        processor=sklearn_processor,
         name="PreprocessData",
         code='preprocess.py',
         inputs=[
