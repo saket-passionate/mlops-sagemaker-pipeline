@@ -60,7 +60,8 @@ def run_preprocessing():
     driver_features = df[['driver_id', 'driver_age',
                         'driver_gender', 'driver_style', 'driver_safety_score']].drop_duplicates(subset=["driver_id"])
     
-    driver_features["event_time"] = datetime.utcnow().isoformat()
+    driver_features["event_time"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+
   
 
     # Ingest features into Feature Store (Do not Create)
