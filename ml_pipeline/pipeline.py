@@ -58,8 +58,8 @@ def get_pipeline(
 
     # Pipeline parameters for instance counts and types
     processing_instance_count = ParameterInteger(name="ProcessingInstanceCount", default_value=1)
-    processing_instance_type = ParameterString(name="ProcessingInstanceType", default_value="ml.m4.xlarge")
-    training_instance_type = ParameterString(name="TrainingInstanceType", default_value="ml.m4.xlarge")
+    processing_instance_type = ParameterString(name="ProcessingInstanceType", default_value="ml.t3.medium")
+    training_instance_type = ParameterString(name="TrainingInstanceType", default_value="ml.t3.medium")
     model_approval_status = ParameterString(name="ModelApprovalStatus", default_value="Approved")
 
 
@@ -72,13 +72,12 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/sklearn_preprocessor",
 )
 
-    custom_processor = ScriptProcessor(
+    custom_processor = Processor(
         image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
         sagemaker_session=sagemaker_session,
-        command=["python3"],
         role=role,
         base_job_name=f"{base_job_prefix}/custom-preprocess",
-        instance_type="ml.m4.xlarge",
+        instance_type="ml.t3.medium",
         instance_count=2
     )
 
