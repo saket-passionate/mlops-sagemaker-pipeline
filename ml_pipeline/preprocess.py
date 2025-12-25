@@ -108,7 +108,7 @@ def run_preprocessing():
             ("numerical", numeric_preprocessor, numeric_features),
         ]
     )
-
+    
     pipeline = make_pipeline(preprocessor)
     processed_data = pipeline.fit_transform(X)
     print("The preprocessed data is: ", processed_data)
