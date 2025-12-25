@@ -72,10 +72,11 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/sklearn_preprocessor",
 )
 
-    custom_processor = Processor(
+    custom_processor = ScriptProcessor(
         image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
         sagemaker_session=sagemaker_session,
         role=role,
+        command=["python3", "/opt/ml/processing/input/code/preprocess.py"],
         base_job_name=f"{base_job_prefix}/custom-preprocess",
         instance_type="ml.t3.medium",
         instance_count=2
