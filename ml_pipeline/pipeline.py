@@ -15,10 +15,6 @@ from sagemaker.processing import FrameworkProcessor, Processor
 
 
 # S3 URIs for preprocessing and evaluation scripts
-S3_PREPROCESSING_URI = (
-    "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/"
-    "Demo/processing/input/code/preprocess.py"
-)
 S3_EVALUATION_URI = (
     "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/"
     "Demo/evaluation/input/code/evaluation.py"
@@ -69,7 +65,8 @@ def get_pipeline(
         instance_count=processing_instance_count,
         instance_type=processing_instance_type,
         base_job_name=f"{base_job_prefix}/custom-preprocess"
-        )
+
+    )
 
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
