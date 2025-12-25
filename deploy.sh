@@ -21,13 +21,13 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 # Install AWS CDK CLI locally in this environment (no global install)
-npm install aws-cdk
+#npm install aws-cdk
 
-echo "Packaging Lambda Function"
-cd lambda_inference
-pip install -r requirements.txt -t .
-zip -r ../lambda_package.zip .
-cd ..
+#echo "Packaging Lambda Function"
+#cd lambda_inference
+#pip install -r requirements.txt -t .
+#zip -r ../lambda_package.zip .
+#cd ..
 
 echo "Uploading ML Scripts"
 cd ml_pipeline
@@ -38,8 +38,8 @@ cd ..
 
 echo "Deploying CDK Stack"
 cd cloud_infra
-../node_modules/.bin/cdk synth
-../node_modules/.bin/cdk deploy --require-approval never
+#../node_modules/.bin/cdk synth
+#../node_modules/.bin/cdk deploy --require-approval never
 cd ..
 
 cd ml_pipeline
