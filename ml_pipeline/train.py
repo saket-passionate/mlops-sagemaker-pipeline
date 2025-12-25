@@ -8,7 +8,7 @@ import joblib  # use joblib directly, not from sklearn.externals
 
 if __name__ == "__main__":
     # SageMaker sets this environment variable to input training data channel path
-    train_dir = os.environ.get('SM_CHANNEL_TRAIN') or "/opt/ml/input/data/train"
+    train_dir = os.environ.get('SM_CHANNEL_TRAIN') 
 
     train_data_path = os.path.join(train_dir, "train.csv")
     print(f"Loading training data from {train_data_path}")
