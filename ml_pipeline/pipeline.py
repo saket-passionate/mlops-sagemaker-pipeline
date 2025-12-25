@@ -142,7 +142,7 @@ def get_pipeline(
 
     # SKLearn processor for evaluation
     eval_processor = SKLearnProcessor(
-        framework_version="1.2-1",
+        framework_version="1.4-2",
         instance_count=1,
         instance_type=processing_instance_type,
         role=role,
@@ -184,7 +184,7 @@ def get_pipeline(
         model_data=training_step.properties.ModelArtifacts.S3ModelArtifacts,
         role=role,
         entry_point="inference.py",
-        framework_version="1.2-1",
+        framework_version="1.4-2",
         py_version="py3",
         sagemaker_session = sagemaker_session
         )
