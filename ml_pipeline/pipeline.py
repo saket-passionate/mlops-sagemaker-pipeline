@@ -11,7 +11,7 @@ from sagemaker.workflow.steps import ProcessingStep, TrainingStep, CreateModelSt
 from sagemaker.workflow.properties import PropertyFile
 from sagemaker.model import Model
 from sagemaker.workflow.step_collections import RegisterModel
-from sagemaker.processing import FrameworkProcessor, Processor
+from sagemaker.processing import FrameworkProcessor, Processor, ScriptProcessor
 
 
 # S3 URIs for preprocessing and evaluation scripts
@@ -58,7 +58,7 @@ def get_pipeline(
 
     # Pipeline parameters for instance counts and types
     processing_instance_count = ParameterInteger(name="ProcessingInstanceCount", default_value=1)
-    processing_instance_type = ParameterString(name="ProcessingInstanceType", default_value="ml.g5.xlarge")
+    processing_instance_type = ParameterString(name="ProcessingInstanceType", default_value="ml.m6g.xlarge")
     training_instance_type = ParameterString(name="TrainingInstanceType", default_value="ml.m4.xlarge")
     model_approval_status = ParameterString(name="ModelApprovalStatus", default_value="Approved")
 
@@ -71,15 +71,15 @@ def get_pipeline(
         instance_type="ml.t3.medium",
         base_job_name=f"{base_job_prefix}/sklearn_preprocessor",
 )
-    
-    custom_processor = Processor(
+
+    custom_processor = ScriptProcessor(
         image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sm-processing-telematics:latest",
         sagemaker_session=sagemaker_session,
+         command=["python3"],
         role=role,
         base_job_name=f"{base_job_prefix}/custom-preprocess",
         instance_type="ml.g5.xlarge",
         instance_count=2
-
     )
 
     # Data preprocessing step
