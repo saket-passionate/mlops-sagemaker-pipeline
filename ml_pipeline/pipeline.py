@@ -73,9 +73,9 @@ def get_pipeline(
 )
 
     custom_processor = ScriptProcessor(
-        image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sm-processing-telematics:latest",
+        image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
         sagemaker_session=sagemaker_session,
-         command=["python3"],
+        command=["python3"],
         role=role,
         base_job_name=f"{base_job_prefix}/custom-preprocess",
         instance_type="ml.g5.xlarge",
