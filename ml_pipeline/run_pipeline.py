@@ -3,6 +3,8 @@ import sagemaker
 from pipeline import get_pipeline  # Replace with your pipeline script filename without .py
 
 def main():
+    print("🔥🔥🔥 PIPELINE VERSION: 2025-01-ARM-FIX 🔥🔥🔥")
+
     region = 'ca-central-1'
     role = 'arn:aws:iam::252312373833:role/MlopsPipelineStack-SageMakerExecutionRole7843F3B8-84gSLJ2pWKPJ'  # Replace with your SageMaker role ARN
     bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp'  # Replace with your S3 bucket for pipeline artifacts
