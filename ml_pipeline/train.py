@@ -32,7 +32,7 @@ if __name__ == "__main__":
     print(y_train.head())
 
     # Train RandomForest model
-    model = RandomForestRegressor(n_estimators=100, max_depth=15, random_state=42)
+    model = RandomForestRegressor(n_estimators=5 max_depth=3, random_state=42)
     model.fit(X_train, y_train)
 
     # SageMaker sets this environment variable as model artifact path for saving
