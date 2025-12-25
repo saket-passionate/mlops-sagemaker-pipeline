@@ -70,7 +70,7 @@ class MlopsPipelineStack(Stack):
         )
 
         ## Create Sagemaker Pipeline tRigger Lambda Fucntion
-        lambda_sagemaker = _lambda.Function(self, "SagemakerPipelineTrigge",
+        lambda_sagemaker = _lambda.Function(self, "SagemakerPipelineTrigger",
                                             runtime=_lambda.Runtime.PYTHON_3_12,
                                             handler="sagemaker_trigger.handler",
                                             code=_lambda.Code.from_asset("../lambda_package.zip"),
