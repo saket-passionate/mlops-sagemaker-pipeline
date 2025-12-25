@@ -85,9 +85,9 @@ def get_pipeline(
     # Data preprocessing step
     # NOW use ProcessingStep with step_args (no source_dir here)
     processing_step = ProcessingStep(
-        processor=sklearn_processor,
+        processor=custom_processor,
         name="PreprocessData",
-        code='preprocess.py',
+        code=S3_PREPROCESSING_URI,
         inputs=[
             ProcessingInput(
                 source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data",
