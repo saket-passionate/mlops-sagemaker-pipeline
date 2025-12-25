@@ -112,7 +112,7 @@ def get_pipeline(
     # SKLearn estimator for training
     sklearn_estimator = SKLearn(
         entry_point="train.py",  # Local path to your training script
-        framework_version="1.4-1",
+        framework_version="1.4-2",
         instance_type=training_instance_type,
         instance_count=1,
         role=role,
