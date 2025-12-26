@@ -1,1 +1,1 @@
-![System Architecture Diagram](system_diagram.png)
+![System Architecture Diagram](ml_system_diagram.png)
