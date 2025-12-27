@@ -71,7 +71,7 @@ class MlopsPipelineStack(Stack):
 
         ## Create Sagemaker Pipeline tRigger Lambda Fucntion
         lambda_sagemaker = _lambda.Function(self, "SagemakerPipelineTrigger",
-                                            runtime=_lambda.Runtime.PYTHON_3_12,
+                                            runtime=_lambda.Runtime.PYTHON_3_9,
                                             handler="sagemaker_trigger.handler",
                                             code=_lambda.Code.from_asset("../lambda_package.zip"),
                                             memory_size=256
@@ -96,7 +96,7 @@ class MlopsPipelineStack(Stack):
       
         ## Create Deployment Lambda Function
         lambda_fn = _lambda.Function(self, "InferenceFucntion",
-                                   runtime=_lambda.Runtime.PYTHON_3_12,
+                                   runtime=_lambda.Runtime.PYTHON_3_9,
                                    handler="app.handler",
                                    #code=_lambda.Code.from_asset(str(Path(__file__).resolve().parent.parent.parent/ "lambda_inference")),
                                    code=_lambda.Code.from_asset("../lambda_package.zip"),
