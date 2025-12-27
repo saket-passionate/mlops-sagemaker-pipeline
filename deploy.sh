@@ -20,18 +20,18 @@ echo "=============================================================="
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Install AWS CDK CLI locally in this environment (no global install)
-#npm install aws-cdk
+Install AWS CDK CLI locally in this environment (no global install)
+npm install aws-cdk
 
-#echo "Packaging Lambda Function"
-#cd lambda_inference
-#pip install -r requirements.txt -t .
-#zip -r ../lambda_package.zip .
-#cd ..
+echo "Packaging Lambda Function"
+cd lambda_inference
+pip install -r requirements.txt -t .
+zip -r ../lambda_package.zip .
+cd ..
 
 echo "Uploading ML Scripts"
 cd ml_pipeline
-aws s3 cp toronto_telematics_realistic.csv s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data/
+#aws s3 cp toronto_telematics_realistic.csv s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/data/
 aws s3 cp evaluation.py s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/evaluation/input/code/evaluation.py
 aws s3 cp preprocess.py s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/input/code/preprocess.py
 aws s3 cp train.py s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/training/input/code/train.py
