@@ -185,8 +185,9 @@ def get_pipeline(
         model_data=training_step.properties.ModelArtifacts.S3ModelArtifacts,
         role=role,
         entry_point="inference.py",
-        # framework_version="1.4-2",
-        image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
+        framework_version="1.4-2",
+        #image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
+        py_version="py3",
         sagemaker_session = sagemaker_session
         )
 
