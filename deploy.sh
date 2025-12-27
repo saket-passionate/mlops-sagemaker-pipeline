@@ -20,7 +20,7 @@ echo "=============================================================="
 pip install --upgrade pip
 pip install -r requirements.txt
 
-Install AWS CDK CLI locally in this environment (no global install)
+# Install AWS CDK CLI locally in this environment (no global install)
 npm install aws-cdk
 
 echo "Packaging Lambda Function"
