@@ -180,12 +180,13 @@ def get_pipeline(
 
     
     from sagemaker.sklearn.model import SKLearnModel
+
     inference_model = SKLearnModel(
         model_data=training_step.properties.ModelArtifacts.S3ModelArtifacts,
         role=role,
         entry_point="inference.py",
-        framework_version="1.4-2",
-        py_version="py3",
+        # framework_version="1.4-2",
+        image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
         sagemaker_session = sagemaker_session
         )
 

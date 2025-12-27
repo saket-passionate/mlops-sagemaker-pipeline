@@ -48,6 +48,7 @@ def run_preprocessing():
     df = pd.read_csv(input_data_path)
 
     print("Loaded dataframe:\n", df.head())
+    print("Loaded dataframe schema:\n", df.info())
 
     # Separate features + target
     X = df.drop(columns=['timestamp', 'trip_score'])
@@ -56,6 +57,12 @@ def run_preprocessing():
     # Separate numerical and cateogorical features
     numeric_features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp', 'driver_age', 'driver_safety_score']
     categorical_features = ['vehicle_type', 'road_type', 'weather', 'driver_gender', 'driver_style']
+
+    features  = ['trip_id', 'speed', 'acceleration',
+                'rpm', 'fuel_rate', 'engine_temp',
+                 'vehicle_type', 'road_type', 'weather',
+                 'driver_id', 'driver_style', 'driver_age',
+                   'driver_gender', 'driver_safety_score']
 
     driver_features = df[['driver_id', 'driver_age',
                         'driver_gender', 'driver_style', 'driver_safety_score']].drop_duplicates(subset=["driver_id"])

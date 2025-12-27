@@ -9,7 +9,55 @@ import os
 import json
 import numpy as np
 import pandas as pd
+import boto3
+import json
 
+region = 'ca-central-1'
+feature_group_name = "driver_features_fg"
+
+fs_runtime = boto3.client(
+    service_name="sagemaker-featurestore-runtime",
+    region_name = region
+    
+)
+
+def get_driver_features_online(driver_id):
+    """
+    Docstring for get_driver_features_online
+    
+    :param driver_id: Description
+
+        ...
+    'Record': [{'FeatureName': 'TransactionID', 'ValueAsString': '2990130'},
+    {'FeatureName': 'isFraud', 'ValueAsString': '0'},
+    {'FeatureName': 'TransactionDT', 'ValueAsString': '152647'},
+    {'FeatureName': 'TransactionAmt', 'ValueAsString': '75.0'},
+    {'FeatureName': 'ProductCD', 'ValueAsString': 'H'},
+    {'FeatureName': 'card1', 'ValueAsString': '4577'},
+    ...
+    """
+    response = fs_runtime.get_record(
+        FeatureGroupName=feature_group_name,
+        RecordIdentifierValueAsString=str(driver_id)
+    )
+    record = response['Record']
+    feature_dict = {}
+
+    # Now I want dictionary of my features
+    for feature in record:
+        feature_name = feature['FeatureName']
+        feature_value = feature['ValueAsString']
+        feature_dict[feature_name] = feature_value
+    
+    for col in ['driver_age', 'driver_safety_score']:
+        if col in feature_dict:
+            feature_dict[col] = float(feature_dict[col])
+    
+    del feature_dict['event_time']
+
+    print("The features dictionary from feature store is: ", feature_dict)
+    
+    return feature_dict
 
 ## 1. LOAD MODEL AT CONTAINER STARTUP
 
@@ -57,11 +105,33 @@ def input_fn(request_body, content_type):
         print("The data after json.loads() is: ", data)
         
         df= pd.DataFrame(data)
-        features = ['speed', 'acceleration', 'rpm', 'fuel_rate', 'engine_temp',
-                    'vehicle_type', 'road_type', 'weather', 'driver_id', 'driver_style']
-        X = df[features]
-        print("The output data frame is: ", X)
-        print("Shape of the data frame is: ", X.shape)
+        # Input Request has following features
+        # ['trip_id', 'speed', 'acceleration','rpm', 'fuel_rate', 'engine_temp','vehicle_type', 'road_type', 'weather', 'driver_id']
+        
+        
+        # For a certain driver Id get driver features from Online Feature Store
+        # Using driver id we get 4 features from online feature store at inference time, and add to it to create final X to be fed to model
+        driver_features = ['driver_age',
+                        'driver_gender', 'driver_style', 'driver_safety_score']
+        
+        features  = ['trip_id', 'speed', 'acceleration','rpm', 'fuel_rate', 'engine_temp','vehicle_type', 'road_type', 'weather',
+                    'driver_id', 'driver_style', 'driver_age', 'driver_gender', 'driver_safety_score']
+        driver_features_list = []
+        
+        for driver_id in df["driver_id"]:
+            driver_features = get_driver_features_online(driver_id)
+            driver_features_list.append(driver_features)
+
+        driver_df = pd.DataFrame(driver_features_list)
+        final_df = pd.concat([df.reset_index(drop=True), driver_df])
+
+        # Then concatenate these features in togethere so be sent to preprocessing pipeline
+        #X = df[features]
+        X = final_df[features]
+        
+        print("Final inference dataframe:")
+        print(X.head())
+        print("Shape:", X.shape)
         
 
     return X
