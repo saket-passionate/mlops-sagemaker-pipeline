@@ -253,8 +253,8 @@ def get_pipeline(
             processing_step,
             training_step,
             evaluation_step,
+            register_model_step,
             baseline_step,
-            register_model_step
         ],
         sagemaker_session=sagemaker_session,
     )
