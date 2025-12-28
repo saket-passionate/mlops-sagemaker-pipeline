@@ -189,7 +189,7 @@ def get_pipeline(
         processor=baseline_processor,
         inputs=[
             ProcessingInput(
-                source=processing_step.properties.ProcessingOutputConfig.Outputs["train"].S3Output.S3Uri,
+                source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
                 destination="/opt/ml/processing/input/"
             )
         ],
