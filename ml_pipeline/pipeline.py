@@ -190,7 +190,7 @@ def get_pipeline(
         inputs=[
             ProcessingInput(
                 source=processing_step.properties.ProcessingOutputConfig.Outputs["train"].S3Output.S3Uri,
-                destination="opt/ml/processing/input/"
+                destination="/opt/ml/processing/input/"
             )
         ],
         outputs=[
