@@ -123,7 +123,7 @@ def input_fn(request_body, content_type):
             driver_features_list.append(driver_features)
 
         driver_df = pd.DataFrame(driver_features_list)
-        final_df = pd.concat([df.reset_index(drop=True), driver_df])
+        final_df = pd.concat([df.reset_index(drop=True), driver_df.reset_index(drop=True)], axis=1)
 
         # Then concatenate these features in togethere so be sent to preprocessing pipeline
         #X = df[features]

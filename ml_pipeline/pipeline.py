@@ -12,6 +12,7 @@ from sagemaker.workflow.properties import PropertyFile
 from sagemaker.model import Model
 from sagemaker.workflow.step_collections import RegisterModel
 from sagemaker.processing import FrameworkProcessor, Processor, ScriptProcessor
+from sagemaker.model_monitor.model_monitoring import ModelMonitor, DefaultModelMonitor
 
 
 # S3 URIs for preprocessing and evaluation scripts
@@ -175,6 +176,34 @@ def get_pipeline(
         property_files=[evaluation_report],
     )
 
+    monitor = DefaultModelMonitor(
+        role=role,
+        sagemaker_session=sagemaker_session,
+        instance_count=1,
+        instance_type='ml.m5.xlarge',
+        volume_size_in_gb=20,
+        max_runtime_in_seconds=3600
+        )
+    
+    baseline_step = ProcessingStep(
+        name="CreateDataQualityBaseline",
+        processor=monitor,
+        inputs=[
+            ProcessingInput(
+                source=processing_step.properties.ProcessingOutputConfig.Outputs["train"].S3Output.S3Uri,
+                destination="opt/ml/processing/input/"
+            )
+        ],
+        outputs=[
+            ProcessingOutput(
+                output_name="baseline",
+                source="/opt/ml/processing/output/",
+                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/input/",
+            )
+        ],
+        code='baseline.py'
+    )
+
 
     # Register Model Using Model Registry
 
@@ -225,6 +254,7 @@ def get_pipeline(
             processing_step,
             training_step,
             evaluation_step,
+            baseline_step,
             register_model_step
         ],
         sagemaker_session=sagemaker_session,
