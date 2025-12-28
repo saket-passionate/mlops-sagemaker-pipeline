@@ -12,9 +12,12 @@ bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp'
 def run_monitoring():
 
     monitor = DefaultModelMonitor(
-        role = role
-    )
-
+        role=role,
+        instance_count=1,
+        instance_type='ml.m5.xlarge',
+        volume_size_in_gb=20,
+        max_runtime_in_seconds=3600
+        )
     monitor.suggest_baseline(
         baseline_dataset="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
         dataset_format=DatasetFormat.csv(),

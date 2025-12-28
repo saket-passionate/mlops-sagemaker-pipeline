@@ -176,18 +176,17 @@ def get_pipeline(
         property_files=[evaluation_report],
     )
 
-    monitor = DefaultModelMonitor(
+    baseline_processor = SKLearnProcessor(
+        framework_version="1.4-2",
         role=role,
-        sagemaker_session=sagemaker_session,
+        instance_type="ml.t3.medium",
         instance_count=1,
-        instance_type='ml.m5.xlarge',
-        volume_size_in_gb=20,
-        max_runtime_in_seconds=3600
-        )
+        sagemaker_session=sagemaker_session
+    )
     
     baseline_step = ProcessingStep(
         name="CreateDataQualityBaseline",
-        processor=monitor,
+        processor=baseline_processor,
         inputs=[
             ProcessingInput(
                 source=processing_step.properties.ProcessingOutputConfig.Outputs["train"].S3Output.S3Uri,
