@@ -19,7 +19,7 @@ def run_monitoring():
         max_runtime_in_seconds=3600
         )
     monitor.suggest_baseline(
-        baseline_dataset="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
+        baseline_dataset="/opt/ml/processing/input/",
         dataset_format=DatasetFormat.csv(),
         output_s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/input/"
 
