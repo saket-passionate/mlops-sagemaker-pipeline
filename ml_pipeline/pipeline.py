@@ -77,7 +77,7 @@ def get_pipeline(
         image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
         sagemaker_session=sagemaker_session,
         role=role,
-        command=["python3", "/opt/ml/processing/input/code/preprocess.py"],
+        command=["python3"],
         base_job_name=f"{base_job_prefix}/custom-preprocess",
         instance_type="ml.t3.medium",
         instance_count=2
@@ -186,7 +186,7 @@ def get_pipeline(
     
     baseline_step = ProcessingStep(
         name="CreateDataQualityBaseline",
-        processor=baseline_processor,
+        processor=custom_processor,
         inputs=[
             ProcessingInput(
                 source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
