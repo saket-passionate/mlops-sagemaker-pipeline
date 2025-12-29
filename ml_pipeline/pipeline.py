@@ -80,7 +80,7 @@ def get_pipeline(
         command=["python3"],
         base_job_name=f"{base_job_prefix}/custom-preprocess",
         instance_type="ml.t3.medium",
-        instance_count=2
+        instance_count=1
     )
 
     # Data preprocessing step
