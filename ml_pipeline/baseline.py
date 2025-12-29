@@ -1,19 +1,33 @@
 from sagemaker.model_monitor.dataset_format import DatasetFormat
 from sagemaker.model_monitor.model_monitoring import DefaultModelMonitor
+import sagemaker
+import boto3
 
 
 region = 'ca-central-1'
 role = 'arn:aws:iam::252312373833:role/MlopsPipelineStack-SageMakerExecutionRole7843F3B8-84gSLJ2pWKPJ'  # Replace with your SageMaker role ARN
 bucket = 'mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp' 
 
+def get_session(region: str = "ca-central-1", bucket: str = "") -> sagemaker.session.Session:
+    """
+    Creates and returns a SageMaker session for the specified AWS region.
+    Optionally specifies a default S3 bucket.
+    """
+    boto_session = boto3.Session(region_name=region)
+    sagemaker_client = boto_session.client("sagemaker")
 
+    return sagemaker.session.Session(
+        boto_session=boto_session,
+        sagemaker_client=sagemaker_client,
+        default_bucket=bucket,
+    )
 
 
 def run_monitoring():
 
     monitor = DefaultModelMonitor(
         role=role,
-
+        sagemaker_session=get_session(role=role, bucket=bucket),
         instance_count=1,
         instance_type='ml.m5.xlarge',
         volume_size_in_gb=20,
