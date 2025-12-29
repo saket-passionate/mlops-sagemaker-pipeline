@@ -27,7 +27,7 @@ def run_monitoring():
 
     monitor = DefaultModelMonitor(
         role=role,
-        sagemaker_session=get_session(role=role, bucket=bucket),
+        sagemaker_session=get_session(region='ca-central-1', bucket=bucket),
         instance_count=1,
         instance_type='ml.m5.xlarge',
         volume_size_in_gb=20,
