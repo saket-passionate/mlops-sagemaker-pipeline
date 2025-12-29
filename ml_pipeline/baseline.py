@@ -29,7 +29,7 @@ def run_monitoring():
         role=role,
         sagemaker_session=get_session(region='ca-central-1', bucket=bucket),
         instance_count=1,
-        instance_type='ml.m5.xlarge',
+        instance_type='ml.m6.xlarge',
         volume_size_in_gb=20,
         max_runtime_in_seconds=3600
         )

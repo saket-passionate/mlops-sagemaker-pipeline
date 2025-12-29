@@ -176,13 +176,6 @@ def get_pipeline(
         property_files=[evaluation_report],
     )
 
-    baseline_processor = SKLearnProcessor(
-        framework_version="1.4-2",
-        role=role,
-        instance_type="ml.t3.medium",
-        instance_count=1,
-        sagemaker_session=sagemaker_session
-    )
     
     baseline_step = ProcessingStep(
         name="CreateDataQualityBaseline",
@@ -234,7 +227,6 @@ def get_pipeline(
         content_types=["text/csv"],
         response_types=["test/csv"],
         inference_instances=["ml.t2.medium", "ml.m5.xlarge"],
-        transform_instances=["ml.m5.xlarge"],
         model_package_group_name=model_package_group_name,
         model=model
 
