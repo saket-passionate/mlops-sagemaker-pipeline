@@ -36,7 +36,7 @@ def run_monitoring():
     monitor.suggest_baseline(
         baseline_dataset="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
         dataset_format=DatasetFormat.csv(),
-        output_s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/input/"
+        output_s3_uri="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/"
 
     )
 

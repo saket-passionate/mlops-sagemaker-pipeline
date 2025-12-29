@@ -197,7 +197,7 @@ def get_pipeline(
             ProcessingOutput(
                 output_name="baseline",
                 source="/opt/ml/processing/output/",
-                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/input/",
+                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/",
             )
         ],
         code='baseline.py'
