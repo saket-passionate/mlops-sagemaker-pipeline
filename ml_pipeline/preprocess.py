@@ -75,7 +75,7 @@ def run_preprocessing():
     
     sagemaker_session = get_session(region, bucket=bucket)
     fg = FeatureGroup(
-        name="driver_features_fg",
+        name="driver_features_fg_v1",
         sagemaker_session=get_session(region=region, bucket=bucket)
     )
 

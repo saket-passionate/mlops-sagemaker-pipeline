@@ -201,7 +201,7 @@ class MlopsPipelineStack(Stack):
             "DriverFeatureGroup",
             description="Feature group for storing driver entity features",
             event_time_feature_name="event_time",
-            feature_group_name="driver_features_fg",
+            feature_group_name="driver_features_fg_v1",
             record_identifier_feature_name="driver_id",
             feature_definitions=[
                 sagemaker.CfnFeatureGroup.FeatureDefinitionProperty(
@@ -233,11 +233,15 @@ class MlopsPipelineStack(Stack):
             online_store_config={
                 "EnableOnlineStore": True
             },
+
+
             offline_store_config={
                 "S3StorageConfig":{
                     # CDK will provision a default bucket if one is not specified
                     "S3Uri": "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/feature_store/driver"
                     }
             },
+
+
             role_arn=feature_store_role.role_arn
         )

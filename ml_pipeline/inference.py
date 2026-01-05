@@ -13,7 +13,7 @@ import boto3
 import json
 
 region = 'ca-central-1'
-feature_group_name = "driver_features_fg"
+feature_group_name = "driver_features_fg_v1"
 
 fs_runtime = boto3.client(
     service_name="sagemaker-featurestore-runtime",
