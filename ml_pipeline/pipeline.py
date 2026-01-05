@@ -177,7 +177,7 @@ def get_pipeline(
     )
 
     
-    baseline_step = ProcessingStep(
+    baseline_data_quality_step = ProcessingStep(
         name="CreateDataQualityBaseline",
         processor=custom_processor,
         inputs=[
@@ -190,10 +190,29 @@ def get_pipeline(
             ProcessingOutput(
                 output_name="baseline",
                 source="/opt/ml/processing/output/",
-                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/",
+                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/data/",
             )
         ],
         code='baseline.py'
+    )
+
+    baseline_model_quality_step = ProcessingStep(
+        name="CreateModelQualityBaseline",
+        processor=custom_processor,
+        inputs=[
+            ProcessingInput(
+                source="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
+                destination="/opt/ml/processing/input/"
+            )
+        ],
+        outputs=[
+            ProcessingOutput(
+                output_name="baseline",
+                source="/opt/ml/processing/output/",
+                destination="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/model/",
+            )
+        ],
+        code='model_monitor_baseline.py'
     )
 
 
@@ -226,7 +245,7 @@ def get_pipeline(
         estimator=sklearn_estimator,
         content_types=["text/csv"],
         response_types=["test/csv"],
-        inference_instances=["ml.t2.medium", "ml.m5.xlarge"],
+        inference_instances=["ml.t2.medium"],
         model_package_group_name=model_package_group_name,
         model=model
 
@@ -246,7 +265,8 @@ def get_pipeline(
             training_step,
             evaluation_step,
             register_model_step,
-            baseline_step,
+            baseline_data_quality_step,
+            baseline_model_quality_step
         ],
         sagemaker_session=sagemaker_session,
     )
