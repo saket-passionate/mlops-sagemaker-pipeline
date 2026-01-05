@@ -56,7 +56,7 @@ def run_monitoring():
         dataset_format=DatasetFormat.csv(header=True),
         output_s3_uri = "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/", # The S3 location to store the results.
         problem_type='Regression',
-        inference_attribute= "prediction", # The column in the dataset that contains predictions.
+        inference_attribute= "trip_score", # The column in the dataset that contains predictions.
         ground_truth_attribute= "label" # The column in the dataset that contains ground truth labels.
     )
     job.wait(logs=False)
