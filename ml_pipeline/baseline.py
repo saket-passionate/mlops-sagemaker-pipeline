@@ -50,11 +50,8 @@ def run_monitoring():
         volume_size_in_gb=5,
         max_runtime_in_seconds=1000
     )
-
-    baseline_job_name = "MyBaseLineJob"
     
     job = model_quality_monitor.suggest_baseline(
-        job_name=baseline_job_name,
         baseline_dataset="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
         dataset_format=DatasetFormat.csv(header=True),
         output_s3_uri = "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/", # The S3 location to store the results.
