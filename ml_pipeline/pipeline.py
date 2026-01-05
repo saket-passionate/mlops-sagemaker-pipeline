@@ -64,15 +64,6 @@ def get_pipeline(
     model_approval_status = ParameterString(name="ModelApprovalStatus", default_value="Approved")
 
 
-    sklearn_processor = SKLearnProcessor(
-        role=role,
-        framework_version="1.2-1",
-        sagemaker_session=sagemaker_session,
-        instance_count=1,
-        instance_type="ml.t3.medium",
-        base_job_name=f"{base_job_prefix}/sklearn_preprocessor",
-)
-
     custom_processor = ScriptProcessor(
         image_uri="252312373833.dkr.ecr.ca-central-1.amazonaws.com/sagemaker-processing:latest",
         sagemaker_session=sagemaker_session,
@@ -266,7 +257,6 @@ def get_pipeline(
             evaluation_step,
             register_model_step,
             baseline_data_quality_step,
-            baseline_model_quality_step
         ],
         sagemaker_session=sagemaker_session,
     )
