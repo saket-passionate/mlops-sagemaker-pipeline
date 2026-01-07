@@ -13,7 +13,7 @@ from sagemaker.model import Model
 from sagemaker.workflow.step_collections import RegisterModel
 from sagemaker.processing import FrameworkProcessor, Processor, ScriptProcessor
 from sagemaker.model_monitor.model_monitoring import ModelMonitor, DefaultModelMonitor
-from sagemaker.workflow.quality_check_step import QualityCheckStep, DataQualityCheckConfig, QualityCheckConfig, 
+from sagemaker.workflow.quality_check_step import QualityCheckStep, DataQualityCheckConfig, QualityCheckConfig
 from sagemaker.workflow.check_job_config import CheckJobConfig
 from sagemaker.model_monitor.dataset_format import DatasetFormat
 from sagemaker.workflow.execution_variables import ExecutionVariables
