@@ -13,7 +13,11 @@ from sagemaker.model import Model
 from sagemaker.workflow.step_collections import RegisterModel
 from sagemaker.processing import FrameworkProcessor, Processor, ScriptProcessor
 from sagemaker.model_monitor.model_monitoring import ModelMonitor, DefaultModelMonitor
-
+from sagemaker.workflow.quality_check_step import QualityCheckStep, DataQualityCheckConfig, QualityCheckConfig, 
+from sagemaker.workflow.check_job_config import CheckJobConfig
+from sagemaker.model_monitor.dataset_format import DatasetFormat
+from sagemaker.workflow.execution_variables import ExecutionVariables
+from sagemaker.workflow.functions import Join
 
 # S3 URIs for preprocessing and evaluation scripts
 S3_PREPROCESSING_URI = (
@@ -242,6 +246,34 @@ def get_pipeline(
 
     )
     
+    # Model Monitoring Step
+    check_job_config = CheckJobConfig(
+        role=role,
+        sagemaker_session=sagemaker_session,
+        instance_count=1,
+        instance_type='ml.t3.medium',
+        base_job_name=f"{base_job_prefix}/monitoring"
+    )
+
+    data_quality_check_config = QualityCheckConfig(
+        baseline_dataset='"s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv',
+        dataset_format=DatasetFormat.csv(),
+        output_s3_uri=Join(on='/', values=['s3:/', bucket, base_job_prefix, ExecutionVariables.PIPELINE_EXECUTION_ID, 'dataqualitycheckstep'])
+
+    )
+
+
+    monitor_step = QualityCheckStep(
+        name='ModelMonitor',
+        register_new_baseline=False,
+        quality_check_config=data_quality_check_config,
+        check_job_config=check_job_config,
+        supplied_baseline_constraints='s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/constraints.json',
+        supplied_baseline_statistics='s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/baseline/statistics.json',
+
+        )
+
+
     # Define the pipeline with steps
     pipeline = Pipeline(
         name=pipeline_name,
@@ -257,6 +289,7 @@ def get_pipeline(
             evaluation_step,
             register_model_step,
             baseline_data_quality_step,
+            monitor_step
         ],
         sagemaker_session=sagemaker_session,
     )
