@@ -257,7 +257,7 @@ def get_pipeline(
         base_job_name=f"{base_job_prefix}/monitoring"
     )
 
-    data_quality_check_config = QualityCheckConfig(
+    data_quality_check_config = DataQualityCheckConfig(
         baseline_dataset='"s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv',
         dataset_format=DatasetFormat.csv(),
         output_s3_uri=Join(on='/', values=['s3:/', bucket, base_job_prefix, ExecutionVariables.PIPELINE_EXECUTION_ID, 'dataqualitycheckstep'])
