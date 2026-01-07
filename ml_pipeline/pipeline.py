@@ -215,7 +215,6 @@ def get_pipeline(
 
     # Register Model Using Model Registry
 
-    
     from sagemaker.sklearn.model import SKLearnModel
 
     inference_model = SKLearnModel(
@@ -253,7 +252,7 @@ def get_pipeline(
         role=role,
         sagemaker_session=sagemaker_session,
         instance_count=1,
-        instance_type='ml.t3.medium',
+        instance_type="ml.m5.xlarge",
         base_job_name=f"{base_job_prefix}/monitoring"
     )
 
