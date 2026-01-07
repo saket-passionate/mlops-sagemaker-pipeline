@@ -41,7 +41,7 @@ def run_monitoring():
 
     )
 
-
+    """
     model_quality_monitor = ModelQualityMonitor(
         role = role,
         sagemaker_session=get_session(region='ca-central-1', bucket=bucket),
@@ -50,7 +50,7 @@ def run_monitoring():
         volume_size_in_gb=5,
         max_runtime_in_seconds=1000
     )
-    """
+    
     job = model_quality_monitor.suggest_baseline(
         baseline_dataset="s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/processing/output/train.csv",
         dataset_format=DatasetFormat.csv(header=True),

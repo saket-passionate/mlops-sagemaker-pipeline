@@ -191,6 +191,7 @@ def get_pipeline(
         code='baseline.py'
     )
 
+    """
     baseline_model_quality_step = ProcessingStep(
         name="CreateModelQualityBaseline",
         processor=custom_processor,
@@ -209,6 +210,7 @@ def get_pipeline(
         ],
         code='model_monitor_baseline.py'
     )
+    """
 
 
     # Register Model Using Model Registry
