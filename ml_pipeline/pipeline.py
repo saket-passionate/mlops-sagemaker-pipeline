@@ -252,7 +252,7 @@ def get_pipeline(
         sagemaker_session=sagemaker_session,
         base_job_name=f"{base_job_prefix}/monitoring",
         instance_count=1,
-        instance_type='ml.m4.xlarge'
+        instance_type='ml.m5.large'
     )
 
     data_quality_check_config = DataQualityCheckConfig(
