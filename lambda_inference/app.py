@@ -39,8 +39,13 @@ def handler(event, context):
         ExecutionRoleArn="arn:aws:iam::252312373833:role/MlopsPipelineStack-SageMakerExecutionRole7843F3B8-84gSLJ2pWKPJ"
 )
 
-
+    
     # 1️⃣ Create a new endpoint configuration
+
+    # Set Data Capture Configurations
+    capture_modes = ["Input", "Output"]
+    s3_capture_upload_path = "s3://mlopspipelinestack-sagemakerartifactbucket4252fcb9-fvqyn7tgtetp/Demo/monitoring/data_capture/"
+    
     sm_client.create_endpoint_config(
         EndpointConfigName=endpoint_config_name,
         ProductionVariants=[
@@ -51,7 +56,13 @@ def handler(event, context):
                 "InstanceType": "ml.t2.medium",
                 "InitialVariantWeight": 1
             }
-        ]
+        ],
+        DataCaptureConfig= {
+            'EnableCapture': True,
+            'InitialSamplingPercentage' : 50,
+            'DestinationS3Uri': s3_capture_upload_path,
+            'CaptureOptions': [{"CaptureMode" : capture_mode} for capture_mode in capture_modes] # Example - Use list comprehension to capture both Input and Output
+    }
     )
 
     # Update the endpoint to use the new model package
