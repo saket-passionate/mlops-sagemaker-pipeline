@@ -250,7 +250,9 @@ def get_pipeline(
     check_job_config = CheckJobConfig(
         role=role,
         sagemaker_session=sagemaker_session,
-        base_job_name=f"{base_job_prefix}/monitoring"
+        base_job_name=f"{base_job_prefix}/monitoring",
+        instance_count=1,
+        instance_type='ml.m4.xlarge'
     )
 
     data_quality_check_config = DataQualityCheckConfig(
