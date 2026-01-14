@@ -59,7 +59,9 @@ def handler(event, context):
         ],
         DataCaptureConfig= {
             'EnableCapture': True,
-            'InitialSamplingPercentage' : 50,
+            'InitialSamplingPercentage' : 100
+            
+            ,
             'DestinationS3Uri': s3_capture_upload_path,
             'CaptureOptions': [{"CaptureMode" : capture_mode} for capture_mode in capture_modes] # Example - Use list comprehension to capture both Input and Output
     }
