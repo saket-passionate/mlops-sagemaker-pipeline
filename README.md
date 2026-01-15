@@ -106,7 +106,7 @@ The Gradio application communicates directly with the SageMaker endpoint created
 To start the Gradio interface locally:
 
 ```bash
-python gradio_app.py
-
+python api_endpoint.py
+```
 
 
