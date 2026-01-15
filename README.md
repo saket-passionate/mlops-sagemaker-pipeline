@@ -88,20 +88,25 @@ aws sagemaker update-model-package \
 
 ### 6. Gradio UI for Real-Time Predictions
 
-A **Gradio-based user interface** is provided to interact with the deployed SageMaker real-time inference endpoint.
+A **Gradio-based user interface** is provided to interact with the deployed **SageMaker real-time inference endpoint**.
 
 The UI allows users to:
-- Input trip data
-- Send requests to the production inference API
+- Input trip-level telematics data (JSON format)
+- Send requests to the **production inference API**
 - View **real-time trip score predictions**
 
-The Gradio application communicates directly with the SageMaker endpoint created in the inference deployment step.
+The Gradio application communicates directly with the SageMaker endpoint created during the inference deployment step, enabling end-to-end validation of the ML system.
 
-To launch the Gradio UI:
+#### Gradio Interface Preview
+
+![Gradio UI for Trip Scoring](Gradio_UI.png)
+
+#### Launching the Gradio UI
+
+To start the Gradio interface locally:
 
 ```bash
 python gradio_app.py
-```
 
 
 
