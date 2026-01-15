@@ -79,10 +79,11 @@ Models are registered with the status:
 - Model approval is performed manually using **AWS CloudShell**
 - This simulates real-world governance and compliance workflows
 
-```bash
+```
 aws sagemaker update-model-package \
   --model-package-name <MODEL_PACKAGE_ARN> \
   --model-approval-status Approved
+```
 
 ### 6. Inference Deployment & Endpoint Creation
 
@@ -90,6 +91,7 @@ After the model is approved in the SageMaker Model Registry, the inference deplo
 
 ```bash
 python api_endpoint.py
+```
 
 
 Creates a SageMaker model from the approved model package
