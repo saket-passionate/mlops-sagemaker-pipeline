@@ -84,21 +84,24 @@ aws sagemaker update-model-package \
   --model-package-name <MODEL_PACKAGE_ARN> \
   --model-approval-status Approved
 ```
+- After the model is approved in the SageMaker Model Registry, the inference deployment is automatically triggered & hosts a sagemaker endpoint 
 
-### 6. Inference Deployment & Endpoint Creation
+### 6. Gradio UI for Real-Time Predictions
 
-After the model is approved in the SageMaker Model Registry, the inference deployment is triggered manually using:
+A **Gradio-based user interface** is provided to interact with the deployed SageMaker real-time inference endpoint.
+
+The UI allows users to:
+- Input trip data
+- Send requests to the production inference API
+- View **real-time trip score predictions**
+
+The Gradio application communicates directly with the SageMaker endpoint created in the inference deployment step.
+
+To launch the Gradio UI:
 
 ```bash
-python api_endpoint.py
+python gradio_app.py
 ```
-
-
-Creates a SageMaker model from the approved model package
-
-Creates an endpoint configuration
-
-Deploys a real-time SageMaker inference endpoint for trip score predictions
 
 
 
